@@ -1,0 +1,4 @@
+blog:
+  core:
+    home:   Главная
+    title:  Symfony 2 блог

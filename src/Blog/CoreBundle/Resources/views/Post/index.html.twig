@@ -1,7 +1,8 @@
-{% extends "::base.html.twig" %}
+{% extends "CoreBundle::layout.html.twig" %}
 
 {% block title %}CoreBundle:Post:index{% endblock %}
 
 {% block body %}
-<h1>Welcome to the Post:index page</h1>
+    {{ parent() }}
+    <h1>Welcome to the Post:index page</h1>
 {% endblock %}
