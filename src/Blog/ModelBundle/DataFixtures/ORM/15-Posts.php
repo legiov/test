@@ -47,7 +47,7 @@ class Posts extends AbstractFixture implements OrderedFixtureInterface
      * @param type $name
      * @return Author
      */
-    public function getAuthor( ObjectManager $manager, $name )
+    private function getAuthor( ObjectManager $manager, $name )
     {
         return $manager->getRepository('ModelBundle:Author')->findOneBy(
             array(
