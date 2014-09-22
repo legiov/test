@@ -14,7 +14,11 @@ class PostController extends Controller
      */
     public function indexAction()
     {
-        return array();
+        $posts = $this->getDoctrine()->getRepository('ModelBundle:Post')->findAll();
+
+        return array(
+            'posts' => $posts
+        );
     }
 
 }

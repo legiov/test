@@ -14,8 +14,9 @@ class PostControllerTest extends WebTestCase
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/');
-        
+
         $this->assertTrue( $client->getResponse()->isSuccessful(),'The response was not Successful');
+        $this->assertCount( 3, $crawler->filter('h2'),'There should be 3 displayed posts');
     }
 
 }

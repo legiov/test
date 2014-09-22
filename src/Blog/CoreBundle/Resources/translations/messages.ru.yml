@@ -2,3 +2,8 @@ blog:
   core:
     home:   Главная
     title:  Symfony 2 блог
+    post:
+      on: 'Время создания:'
+      by: Создатель
+      read:
+        more: Читать дальше

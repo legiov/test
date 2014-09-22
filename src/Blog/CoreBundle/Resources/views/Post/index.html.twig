@@ -2,7 +2,9 @@
 
 {% block title %}CoreBundle:Post:index{% endblock %}
 
-{% block body %}
-    {{ parent() }}
-    <h1>Welcome to the Post:index page</h1>
+{% block section %}
+    {% for post in posts %}
+        {{ include('CoreBundle:Post:_post.html.twig', {post: post} ) }}
+    {% endfor %}
+
 {% endblock %}

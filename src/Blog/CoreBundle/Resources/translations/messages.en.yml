@@ -2,5 +2,9 @@ blog:
   core:
     home:   Home
     title:  Symfony 2 blog
-  
-  
+    post:
+      on: 'Post created:'
+      by: By
+      read:
+        more: Read more
+
