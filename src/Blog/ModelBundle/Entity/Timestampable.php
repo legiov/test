@@ -12,13 +12,23 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 abstract class Timestampable
 {
+
+
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="createdAt", type="datetime")
+     * @ORM\Column(name="created_at", type="datetime")
      * @Gedmo\Timestampable(on="create")
      */
     protected $createdAt;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="updated_at", type="datetime")
+     * @Gedmo\Timestampable(on="update")
+     */
+    protected $updatedAt;
 
     /**
      * Set createdAt
@@ -42,4 +52,26 @@ abstract class Timestampable
     {
         return $this->createdAt;
     }
+
+    /**
+     * Get updatedAt
+     * @return \DateTime
+     */
+    function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     */
+    function setUpdatedAt( \DateTime $updatedAt )
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
 }
