@@ -4,6 +4,7 @@ namespace Blog\ModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Post
@@ -37,10 +38,10 @@ class Post extends Timestampable
      * @Assert\NotBlank()
      */
     private $body;
-    
+
     /**
      *
-     * @var type 
+     * @var type
      * @ORM\ManyToOne(targetEntity="Author", inversedBy="posts")
      * @ORM\JoinColumn(name="author_id", referencedColumnName="id", nullable=false)
      * @Assert\NotBlank()
@@ -48,9 +49,16 @@ class Post extends Timestampable
     private $author;
 
     /**
+     * @ORM\Column(name="slug", type = "string", length=255)
+     * @Gedmo\Slug(fields={"title"}, unique=true )
+     * @var string
+     */
+    private $slug;
+
+    /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -66,14 +74,14 @@ class Post extends Timestampable
     public function setTitle($title)
     {
         $this->title = $title;
-    
+
         return $this;
     }
 
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -89,14 +97,14 @@ class Post extends Timestampable
     public function setBody($body)
     {
         $this->body = $body;
-    
+
         return $this;
     }
-    
+
     /**
      * Get body
      *
-     * @return string 
+     * @return string
      */
     public function getBody()
     {
@@ -112,17 +120,41 @@ class Post extends Timestampable
     public function setAuthor(Author $author)
     {
         $this->author = $author;
-    
+
         return $this;
     }
 
     /**
      * Get author
      *
-     * @return Author 
+     * @return Author
      */
     public function getAuthor()
     {
         return $this->author;
     }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Post
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
 }

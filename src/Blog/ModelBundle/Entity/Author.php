@@ -28,19 +28,19 @@ class Author extends Timestampable
      * @ORM\Column(name="name", type="string", length=100)
      */
     private $name;
-    
+
     /**
      *
      * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="Post", mappedBy="author", cascade={"remove"})
-     * 
+     *
      */
     private $posts;
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -56,20 +56,20 @@ class Author extends Timestampable
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
         return $this->name;
     }
-    
+
     /**
      * Constructor
      */
@@ -78,7 +78,7 @@ class Author extends Timestampable
         parent::__construct();
         $this->posts = new ArrayCollection();
     }
-    
+
     /**
      * Add posts
      *
@@ -88,7 +88,7 @@ class Author extends Timestampable
     public function addPost(Post $posts)
     {
         $this->posts[] = $posts;
-    
+
         return $this;
     }
 
@@ -105,7 +105,7 @@ class Author extends Timestampable
     /**
      * Get posts
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getPosts()
     {

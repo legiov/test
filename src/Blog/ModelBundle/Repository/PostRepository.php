@@ -12,4 +12,36 @@ use Doctrine\ORM\EntityRepository;
  */
 class PostRepository extends EntityRepository
 {
+    /**
+     *
+     * @param int $num
+     * @return array
+     */
+    public function findLatest( $num )
+    {
+        $qb = $this->getQueryBuilder()
+        ->orderBy('p.createdAt', 'desc')
+        ->setMaxResults( $num );
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     *
+     * @param boolen $indexed - проиндексировать массив по id
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    private function getQueryBuilder( $indexed = false )
+    {
+        $builder = $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('p');
+        if( $indexed )
+            $builder->from( $this->getClassName(), 'p', 'p.id');
+        else
+            $builder->from( $this->getClassName(), 'p');
+
+        return $builder;
+
+    }
 }

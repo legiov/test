@@ -1,6 +1,15 @@
 {% extends "CoreBundle::layout.html.twig" %}
 
-{% block title %}CoreBundle:Post:index{% endblock %}
+{% block title %}{{ 'blog.core.post.plural' | trans }}{% endblock %}
+
+{% block sidebar %}
+    <aside>
+        <h3>{{ 'blog.core.post.latests' | trans }}</h3>
+        {% for post in latest_posts %}
+            <p><a href="">{{ post.title }}</a></p>
+        {% endfor %}
+    </aside>
+{% endblock %}
 
 {% block section %}
     {% for post in posts %}

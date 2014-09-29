@@ -7,4 +7,6 @@ blog:
       by: By
       read:
         more: Read more
+      latests: Latest posts
+      plural: Posts
 
