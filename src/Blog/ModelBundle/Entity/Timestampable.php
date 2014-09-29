@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping AS ORM;
 /**
  * Description of Timestampable
  * define created behavior
- * ORM\MappedSuperClass()
+ * @ORM\MappedSuperClass()
  */
 abstract class Timestampable
 {
@@ -15,10 +15,10 @@ abstract class Timestampable
      * @var \DateTime
      *
      * @ORM\Column(name="createdAt", type="datetime")
-     * 
+     *
      */
     protected $createdAt;
-    
+
     /**
      * Construct
      */
@@ -26,7 +26,7 @@ abstract class Timestampable
     {
         $this->createdAt = new \DateTime();
     }
-    
+
     /**
      * Set createdAt
      *
@@ -36,14 +36,14 @@ abstract class Timestampable
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-    
+
         return $this;
     }
 
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
