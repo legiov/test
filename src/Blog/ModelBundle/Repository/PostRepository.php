@@ -20,10 +20,23 @@ class PostRepository extends EntityRepository
     public function findLatest( $num )
     {
         $qb = $this->getQueryBuilder()
-        ->orderBy('p.createdAt', 'desc')
-        ->setMaxResults( $num );
+            ->orderBy('p.createdAt', 'desc')
+            ->setMaxResults( $num );
 
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Return the first post
+     * @return Post
+     */
+    public function findFirst()
+    {
+        $qb = $this->getQueryBuilder()
+            ->orderBy('p.id', 'asc')
+            ->setMaxResults( 1 );
+
+        return $qb->getQuery()->getSingleResult();
     }
 
     /**

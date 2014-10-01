@@ -2,9 +2,11 @@ blog:
   core:
     home:   Главная
     title:  Symfony 2 блог
+    author: Автор
     post:
       on: 'Время создания:'
       by: Создатель
+      by%name%: Автор
       read:
         more: Читать дальше
       latests: Последние посты

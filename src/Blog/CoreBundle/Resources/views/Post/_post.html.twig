@@ -1,6 +1,6 @@
 <article>
     <header>
-        <h2><a href="#">{{ post.title }}</a></h2>
+        <h2><a href="{{ path('blog_core_post_show', {'slug' : post.slug})}}">{{ post.title }}</a></h2>
         <p>
             {{ 'blog.core.post.on' | trans }}
             <time datetime="{{ post.createdAt | date('c') }}">{{ post.createdAt | date }}</time>
@@ -8,7 +8,7 @@
         </p>
     </header>
     <p>
-        {{ post.body | truncate(400) }} &#8212; <a href="#">{{ 'blog.core.post.read.more' | trans }} &raquo;</a>
+        {{ post.body | truncate(400) }} &#8212; <a href="{{ path('blog_core_post_show', {'slug' : post.slug})}}">{{ 'blog.core.post.read.more' | trans }} &raquo;</a>
     </p>
 
 </article>

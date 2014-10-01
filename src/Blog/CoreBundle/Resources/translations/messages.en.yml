@@ -2,9 +2,11 @@ blog:
   core:
     home:   Home
     title:  Symfony 2 blog
+    author: Author
     post:
       on: 'Post created:'
       by: By
+      by%name%: Author %name%
       read:
         more: Read more
       latests: Latest posts

@@ -23,4 +23,27 @@ class PostController extends Controller
         );
     }
 
+    /**
+     * Show a post
+     *
+     * @param string $slug
+     * @return array
+     *
+     * @Route("/{slug}")
+     * @Template()
+     * @throws NotFoundHttpException
+     */
+    public function showAction( $slug )
+    {
+        $post = $this->getDoctrine()->getRepository('ModelBundle:Post')->findOneBy(array( 'slug' => $slug ));
+        if( $post === null )
+            throw $this->createNotFoundException('Post was not found');
+
+
+
+        return array(
+            'post'         => $post,
+        );
+    }
+
 }
