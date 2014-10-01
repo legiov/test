@@ -12,4 +12,35 @@ use Doctrine\ORM\EntityRepository;
  */
 class AuthorRepository extends EntityRepository
 {
+    /**
+     * Return the first post
+     * @return Author
+     */
+    public function findFirst()
+    {
+        $qb = $this->getQueryBuilder()
+            ->orderBy('a.id', 'asc')
+            ->setMaxResults( 1 );
+
+        return $qb->getQuery()->getSingleResult();
+    }
+
+    /**
+     *
+     * @param boolen $indexed - проиндексировать массив по id
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    private function getQueryBuilder( $indexed = false )
+    {
+        $builder = $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('a');
+        if( $indexed )
+            $builder->from( $this->getClassName(), 'a', 'a.id');
+        else
+            $builder->from( $this->getClassName(), 'a');
+
+        return $builder;
+
+    }
 }

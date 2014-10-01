@@ -4,6 +4,7 @@ namespace Blog\ModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Author
@@ -28,6 +29,15 @@ class Author extends Timestampable
      * @ORM\Column(name="name", type="string", length=100)
      */
     private $name;
+
+    /**
+     *
+     * @var string
+     *
+     * @Gedmo\Slug(fields={"name"}, unique=true)
+     * @ORM\Column(name="slug", type = "string")
+     */
+    private $slug;
 
     /**
      *
@@ -75,7 +85,7 @@ class Author extends Timestampable
      */
     public function __construct()
     {
-        
+
         $this->posts = new ArrayCollection();
     }
 
@@ -111,4 +121,26 @@ class Author extends Timestampable
     {
         return $this->posts;
     }
+
+    /**
+     * Get slug
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     *
+     * @param string $slug
+     * @return \Blog\ModelBundle\Entity\Author
+     */
+    public function setSlug( $slug )
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
 }

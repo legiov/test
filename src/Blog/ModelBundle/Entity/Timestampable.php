@@ -8,7 +8,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * Description of Timestampable
  * define created behavior
- * @ORM\MappedSuperClass()
+ * @ORM\MappedSuperclass()
  */
 abstract class Timestampable
 {
@@ -57,7 +57,7 @@ abstract class Timestampable
      * Get updatedAt
      * @return \DateTime
      */
-    function getUpdatedAt()
+    public function getUpdatedAt()
     {
         return $this->updatedAt;
     }
@@ -67,7 +67,7 @@ abstract class Timestampable
      *
      * @param \DateTime $updatedAt
      */
-    function setUpdatedAt( \DateTime $updatedAt )
+    public function setUpdatedAt( \DateTime $updatedAt )
     {
         $this->updatedAt = $updatedAt;
 
