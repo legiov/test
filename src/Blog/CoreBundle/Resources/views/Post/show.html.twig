@@ -7,7 +7,7 @@
 {% block sidebar %}
     <aside>
         <h3>{{ "blog.core.author" | trans }}</h3>
-        <p><a href="" title="{{ 'blog.core.post.by%name%' | trans({'%name%': post.author.name }) }}">{{ post.author.name }}</a></p>
+        <p><a href="{{ path('author_show', {slug:post.author.slug}) }}" title="{{ 'blog.core.post.by%name%' | trans({'%name%': post.author.name }) }}">{{ post.author.name }}</a></p>
     </aside>
 {% endblock %}
 

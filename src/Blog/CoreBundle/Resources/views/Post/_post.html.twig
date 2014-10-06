@@ -4,7 +4,7 @@
         <p>
             {{ 'blog.core.post.on' | trans }}
             <time datetime="{{ post.createdAt | date('c') }}">{{ post.createdAt | date }}</time>
-            {{ 'blog.core.post.by' | trans }} <a href="#">{{ post.author.name }}</a>
+            {{ 'blog.core.post.by' | trans }} <a href="{{ path('author_show', {slug:post.author.slug}) }}">{{ post.author.name }}</a>
         </p>
     </header>
     <p>

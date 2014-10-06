@@ -18,7 +18,7 @@ class AuthorController extends Controller
      * @param string $slug
      * @return array
      *
-     * @Route("/author/{slug}")
+     * @Route("/author/{slug}", name="author_show")
      * @Template()
      * @throws NotFoundHttpException
      */
