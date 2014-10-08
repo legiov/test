@@ -6,6 +6,7 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Blog\ModelBundle\Entity\Post;
+use Faker\Factory as FakerFactory;
 /**
  * Description of 15-Posts
  *
@@ -14,35 +15,39 @@ use Blog\ModelBundle\Entity\Post;
 class Posts extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
-     * 
+     *
      * {@inheritdoc}
      */
     public function load( ObjectManager $manager )
     {
+        $faker = FakerFactory::create('ru_RU');
         $p1 = new Post();
-        $p1->setTitle( 'Lorem ipsum dolor sit amet' );
-        $p1->setBody('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eget hendrerit erat, non fermentum massa. Cras feugiat, tortor porta maximus volutpat, ex orci lacinia elit, in sagittis mauris dui at ipsum. Sed nec euismod leo, nec semper nisi. Duis ut facilisis tortor, vitae molestie urna. Etiam rhoncus augue ac feugiat tincidunt. In hac habitasse platea dictumst. Nulla facilisi. Nullam maximus mattis tincidunt. Nunc blandit rutrum nibh, at auctor diam interdum non. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse aliquam metus a vestibulum imperdiet. Suspendisse id tristique justo, eu vestibulum est. Quisque sed velit non neque vulputate scelerisque. Vivamus egestas sapien ac sodales blandit.');
-                $p1->setAuthor( $this->getAuthor($manager, 'Vadim'));
-        
+        $p1->setTitle( $faker->sentence(5));
+        $p1->setBody( $faker->paragraph(12));
+        $faker->seed(1111);
+        $p1->setAuthor( $this->getAuthor($manager, $faker->firstName));
+
         $p2 = new Post();
-        $p2->setTitle( 'Lorem ipsum dolor sit amet' );
-        $p2->setBody('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eget hendrerit erat, non fermentum massa. Cras feugiat, tortor porta maximus volutpat, ex orci lacinia elit, in sagittis mauris dui at ipsum. Sed nec euismod leo, nec semper nisi. Duis ut facilisis tortor, vitae molestie urna. Etiam rhoncus augue ac feugiat tincidunt. In hac habitasse platea dictumst. Nulla facilisi. Nullam maximus mattis tincidunt. Nunc blandit rutrum nibh, at auctor diam interdum non. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse aliquam metus a vestibulum imperdiet. Suspendisse id tristique justo, eu vestibulum est. Quisque sed velit non neque vulputate scelerisque. Vivamus egestas sapien ac sodales blandit.');
-        $p2->setAuthor( $this->getAuthor($manager, 'Nikolay'));
-        
+        $p2->setTitle( $faker->sentence(7) );
+        $p2->setBody( $faker->paragraph(15));
+        $faker->seed(1112);
+        $p2->setAuthor( $this->getAuthor($manager, $faker->firstName));
+
         $p3 = new Post();
-        $p3->setTitle( 'Lorem ipsum dolor sit amet' );
-        $p3->setBody('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eget hendrerit erat, non fermentum massa. Cras feugiat, tortor porta maximus volutpat, ex orci lacinia elit, in sagittis mauris dui at ipsum. Sed nec euismod leo, nec semper nisi. Duis ut facilisis tortor, vitae molestie urna. Etiam rhoncus augue ac feugiat tincidunt. In hac habitasse platea dictumst. Nulla facilisi. Nullam maximus mattis tincidunt. Nunc blandit rutrum nibh, at auctor diam interdum non. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse aliquam metus a vestibulum imperdiet. Suspendisse id tristique justo, eu vestibulum est. Quisque sed velit non neque vulputate scelerisque. Vivamus egestas sapien ac sodales blandit.');
-        $p3->setAuthor( $this->getAuthor($manager, 'Edgar'));
-        
+        $p3->setTitle( $faker->sentence(4) );
+        $p3->setBody( $faker->paragraph(18));
+        $faker->seed(1111);
+        $p3->setAuthor( $this->getAuthor($manager, $faker->firstName));
+
         $manager->persist( $p1 );
         $manager->persist( $p2 );
         $manager->persist( $p3 );
 
         $manager->flush();
     }
-    
+
     /**
-     * 
+     *
      * @param ObjectManager $manager
      * @param type $name
      * @return Author
@@ -57,7 +62,7 @@ class Posts extends AbstractFixture implements OrderedFixtureInterface
     }
 
     /**
-     * 
+     *
      * {@inheritdoc}
      */
     public function getOrder()
