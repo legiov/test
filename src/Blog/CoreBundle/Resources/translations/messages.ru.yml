@@ -11,3 +11,7 @@ blog:
         more: Читать дальше
       latests: Последние посты
       plural: Посты
+    comment:
+      plural: Комментарии
+      on: Добавлен
+      by: Автор

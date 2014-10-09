@@ -11,4 +11,8 @@ blog:
         more: Read more
       latests: Latest posts
       plural: Posts
+      comment:
+        plural: Comments
+        on: Created on
+        by: Author
 

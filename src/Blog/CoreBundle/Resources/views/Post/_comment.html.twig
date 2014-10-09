@@ -1,0 +1,9 @@
+<article class="comment">
+    <header>
+        <p>
+            {{- 'blog.core.post.comment.on' | trans }} <time datetime=" {{ comment.createdAt | date('c') }}">{{ comment.createdAt | date }}</time>
+        </p>
+        {{ 'blog.core.post.comment.by' | trans }}: {{ comment.authorName -}}
+    </header>
+    <p>{{ comment.body | nl2br }}</p>
+</article>
