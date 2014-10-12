@@ -1,0 +1,9 @@
+parameters:
+    blog.core.twig.plural_extension.class: Blog\CoreBundle\TwigExtension\TransPlural
+
+services:
+    acme.twig.acme_extension:
+        class: %blog.core.twig.plural_extension.class%
+        arguments: [@translator]
+        tags:
+            - { name: twig.extension }

@@ -2,8 +2,9 @@
     <header>
         <p>
             {{- 'blog.core.post.comment.on' | trans }} <time datetime=" {{ comment.createdAt | date('c') }}">{{ comment.createdAt | date }}</time>
+            |
+            {{ 'blog.core.post.comment.by' | trans }}: {{ comment.authorName | title -}}
         </p>
-        {{ 'blog.core.post.comment.by' | trans }}: {{ comment.authorName -}}
     </header>
     <p>{{ comment.body | nl2br }}</p>
 </article>
