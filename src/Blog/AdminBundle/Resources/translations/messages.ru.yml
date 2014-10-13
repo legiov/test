@@ -1,0 +1,6 @@
+blog:
+  admin:
+    home: Главная
+    posts: Посты
+    authors: Авторы
+    title: Панель администратора

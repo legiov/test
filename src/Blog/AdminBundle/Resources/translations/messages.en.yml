@@ -1,0 +1,8 @@
+blog:
+  admin:
+    home: Home
+    posts: Posts
+    authors: Authors
+    title: Admin panel
+
+

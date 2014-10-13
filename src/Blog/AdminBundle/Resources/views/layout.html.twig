@@ -1,0 +1,27 @@
+{% extends "::base.html.twig" %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/admin/css/main.css') }}"
+{% endblock %}
+
+{% block body %}
+    <header>
+        <p>{{ 'blog.admin.title' | trans }}</p>
+        <nav>
+            <ul>
+                <li><a href="{{ path('main_index') }}">{{ 'blog.admin.home' | trans }}</a></li>
+                <li><a href="{{ path('main_index') }}">{{ 'blog.admin.posts' | trans }}</a></li>
+                <li><a href="{{ path('main_index') }}">{{ 'blog.admin.authors' | trans }}</a></li>
+            </ul>
+        </nav>
+    </header>
+    {% block sidebar %}{% endblock%}
+    <section>
+        {% block section %}{% endblock %}
+    </section>
+
+    <footer>
+        <p>&copy;{{ 'now' | date('Y') }} {{ 'blog.core.title' | trans }}</p>
+    </footer>
+
+{% endblock %}
