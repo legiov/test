@@ -11,7 +11,7 @@ blog:
         more: Read more
       latests: Latest posts
       plural: Posts
-      comments: '{0} No comments | {1} %count% comment | ]1:Inf] %count% comments'
+      comments: '{0} No comments | {1} %count% comment | ]1,Inf] %count% comments'
     comment:
       plural: Comments
       on: Created on
@@ -20,5 +20,5 @@ blog:
       comment: Comment
       send: Send
       write: Write comment
-      
+
 

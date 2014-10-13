@@ -41,7 +41,7 @@ class Comment extends Timestampable
     /**
      * @ORM\ManyToOne(targetEntity="Post", inversedBy="comments")
      * @ORM\JoinColumn(name="post_id", referencedColumnName="id")
-     * @Assert\NotBlank()
+     * //@Assert\NotBlank(message="test3")
      * @var Post
      */
     private $post;
@@ -112,14 +112,14 @@ class Comment extends Timestampable
     public function setPost(\Blog\ModelBundle\Entity\Post $post = null)
     {
         $this->post = $post;
-    
+
         return $this;
     }
 
     /**
      * Get post
      *
-     * @return \Blog\ModelBundle\Entity\Post 
+     * @return \Blog\ModelBundle\Entity\Post
      */
     public function getPost()
     {

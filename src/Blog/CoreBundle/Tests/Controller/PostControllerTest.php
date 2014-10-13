@@ -35,7 +35,7 @@ class PostControllerTest extends WebTestCase
 
         $this->assertGreaterThanOrEqual( 1,$crawler->filter('article.comment')->count(),'There shoud be at last one comment');
     }
-    
+
     /**
      * Test create comment
      */
@@ -48,18 +48,18 @@ class PostControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/'. $post->getSlug() );
 
         $button = $crawler->selectButton('Send');
-        
+
         $form = $button->form( array(
             'blog_modelbundle_comment[authorName]'  => 'some name',
             'blog_modelbundle_comment[body]'        => 'some text'
         ));
-        
+
         $client->submit($form);
-        
-        $this->assertTrue( $client->getResponse()->isRedirect('/'. $post->getSlug() ), 'There is no redirection' );
-        
+
+        $this->assertTrue( $client->getResponse()->isRedirect('/'. $post->getSlug().'#comments' ), 'There is no redirection' );
         $crawler = $client->followRedirect();
-        
+
+
         $this->assertCount( 1, $crawler->filter('html:contains("Your comment was submited successfully")'), 'There was no confirmation massage');
     }
 
