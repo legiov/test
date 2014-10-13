@@ -12,12 +12,12 @@ blog:
       latests: Latest posts
       plural: Posts
       comments: '{0} No comments | {1} %count% comment | ]1,Inf] %count% comments'
+      comment:
+        plural: Comments
+        on: Created on
+        by: Author
     comment:
-      plural: Comments
-      on: Created on
-      by: Author
       author: Author name
-      comment: Comment
       send: Send
       write: Write comment
 

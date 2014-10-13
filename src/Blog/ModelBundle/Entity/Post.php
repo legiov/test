@@ -204,4 +204,9 @@ class Post extends Timestampable
     {
         return $this->comments;
     }
+    
+    public function __toString()
+    {
+        return $this->title;
+    }
 }
