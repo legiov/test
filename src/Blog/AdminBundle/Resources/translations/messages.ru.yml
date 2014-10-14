@@ -4,3 +4,4 @@ blog:
     posts: Посты
     authors: Авторы
     title: Панель администратора
+    logout: Выход

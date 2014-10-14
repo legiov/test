@@ -10,8 +10,11 @@
         <nav>
             <ul>
                 <li><a href="{{ path('main_index') }}">{{ 'blog.admin.home' | trans }}</a></li>
-                <li><a href="{{ path('main_index') }}">{{ 'blog.admin.posts' | trans }}</a></li>
-                <li><a href="{{ path('main_index') }}">{{ 'blog.admin.authors' | trans }}</a></li>
+                <li><a href="{{ path('blog_admin_post_index') }}">{{ 'blog.admin.posts' | trans }}</a></li>
+                <li><a href="{{ path('blog_admin_author_index') }}">{{ 'blog.admin.authors' | trans }}</a></li>
+                {% if app.user %}
+                    <li><a href="{{ path('blog_admin_security_logout') }}">{{ 'blog.admin.logout' | trans }}</a></li>
+                {% endif %}
             </ul>
         </nav>
     </header>

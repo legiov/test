@@ -4,5 +4,6 @@ blog:
     posts: Posts
     authors: Authors
     title: Admin panel
+    logout: Exit
 
 

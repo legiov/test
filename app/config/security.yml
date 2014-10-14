@@ -27,13 +27,14 @@ security:
             form_login:
                 check_path: blog_admin_security_logincheck
                 login_path: blog_admin_security_login
-#            logout:
-#                path:   _demo_logout
-#                target: _demo
+            logout:
+                path:   blog_admin_security_logout
+                target: blog_admin_security_login
             anonymous: ~
             http_basic:
             #    realm: "Secured Demo Area"
 
     access_control:
-        - { path: ^/demo/secured/hello/admin/, roles: ROLE_ADMIN }
-        #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        
