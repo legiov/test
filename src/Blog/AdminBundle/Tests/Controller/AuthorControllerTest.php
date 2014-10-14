@@ -4,22 +4,28 @@ namespace Blog\ModelBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * class AuthorControllerTest
+ */
 class AuthorControllerTest extends WebTestCase
 {
-    /*
+    /**
+     * test Author CRUD
+     */
     public function testCompleteScenario()
     {
         // Create a new client to browse the application
         $client = static::createClient();
 
         // Create a new entry in the database
-        $crawler = $client->request('GET', '/author/');
+        $crawler = $client->request('GET', '/admin/author/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /author/");
         $crawler = $client->click($crawler->selectLink('Create a new entry')->link());
 
         // Fill in the form and submit it
         $form = $crawler->selectButton('Create')->form(array(
-            'blog_modelbundle_author[field_name]'  => 'Test',
+            'blog_modelbundle_author[name]'  => 'Test',
+            
             // ... other fields to fill
         ));
 
@@ -33,7 +39,7 @@ class AuthorControllerTest extends WebTestCase
         $crawler = $client->click($crawler->selectLink('Edit')->link());
 
         $form = $crawler->selectButton('Update')->form(array(
-            'blog_modelbundle_author[field_name]'  => 'Foo',
+            'blog_modelbundle_author[name]'  => 'Foo',
             // ... other fields to fill
         ));
 
@@ -51,5 +57,5 @@ class AuthorControllerTest extends WebTestCase
         $this->assertNotRegExp('/Foo/', $client->getResponse()->getContent());
     }
 
-    */
+    
 }

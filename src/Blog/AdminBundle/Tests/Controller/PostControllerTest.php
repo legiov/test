@@ -4,23 +4,31 @@ namespace Blog\ModelBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * class PostControllerTest
+ */
 class PostControllerTest extends WebTestCase
 {
-    /*
+    /**
+     * test Post CRUD
+     */
     public function testCompleteScenario()
     {
         // Create a new client to browse the application
         $client = static::createClient();
-
+        
         // Create a new entry in the database
-        $crawler = $client->request('GET', '/post/');
+        $crawler = $client->request('GET', '/admin/post/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /post/");
         $crawler = $client->click($crawler->selectLink('Create a new entry')->link());
 
+        $author = $crawler->filter('#blog_modelbundle_post_author option:contains("Любовь")')->attr('value');
         // Fill in the form and submit it
         $form = $crawler->selectButton('Create')->form(array(
-            'blog_modelbundle_post[field_name]'  => 'Test',
-            // ... other fields to fill
+            'blog_modelbundle_post[title]'  => 'Test',
+            'blog_modelbundle_post[body]'  => 'Test',
+            'blog_modelbundle_post[slug]'  => 'Test',
+            'blog_modelbundle_post[author]'  => $author,
         ));
 
         $client->submit($form);
@@ -33,8 +41,10 @@ class PostControllerTest extends WebTestCase
         $crawler = $client->click($crawler->selectLink('Edit')->link());
 
         $form = $crawler->selectButton('Update')->form(array(
-            'blog_modelbundle_post[field_name]'  => 'Foo',
-            // ... other fields to fill
+            'blog_modelbundle_post[title]'  => 'Foo',
+            'blog_modelbundle_post[body]'  => 'Foo',
+            'blog_modelbundle_post[slug]'  => 'Test',
+            'blog_modelbundle_post[author]'  => $author,
         ));
 
         $client->submit($form);
@@ -51,5 +61,5 @@ class PostControllerTest extends WebTestCase
         $this->assertNotRegExp('/Foo/', $client->getResponse()->getContent());
     }
 
-    */
+   
 }
