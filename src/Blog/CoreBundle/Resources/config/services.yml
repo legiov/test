@@ -1,5 +1,7 @@
 parameters:
-    blog.core.twig.plural_extension.class: Blog\CoreBundle\TwigExtension\TransPlural
+    blog.core.twig.plural_extension.class:  Blog\CoreBundle\TwigExtension\TransPlural
+    blog.core.author_manager.class:         Blog\CoreBundle\Services\AuthorManager
+    blog.core.post_manager.class:           Blog\CoreBundle\Services\PostManager
 
 services:
     acme.twig.acme_extension:
@@ -7,3 +9,13 @@ services:
         arguments: [@translator]
         tags:
             - { name: twig.extension }
+
+    blog.core.author_manager:
+        class: %blog.core.author_manager.class%
+        arguments:
+            - @doctrine.orm.entity_manager
+
+    blog.core.post_manager:
+        class: %blog.core.post_manager.class%
+        arguments:
+            - @doctrine.orm.entity_manager

@@ -19,8 +19,8 @@ class PostController extends Controller
      */
     public function indexAction()
     {
-        $posts = $this->getDoctrine()->getRepository('ModelBundle:Post')->findAll();
-        $latastPosts = $this->getDoctrine()->getRepository('ModelBundle:Post')->findLatest(3);
+        $posts = $this->getPostManager()->findAll();
+        $latastPosts = $this->getPostManager()->findLatest(3);
 
         return array(
             'posts'         => $posts,
@@ -40,9 +40,7 @@ class PostController extends Controller
      */
     public function showAction( $slug )
     {
-        $post = $this->getDoctrine()->getRepository('ModelBundle:Post')->findOneBy(array( 'slug' => $slug ));
-        if( $post === null )
-            throw $this->createNotFoundException('Post was not found');
+        $post = $this->getPostManager()->findBySlug($slug);
 
         $form = $this->createForm( new CommentType() );
 
@@ -64,9 +62,8 @@ class PostController extends Controller
      */
     public function createCommentAction( Request $request, $slug )
     {
-        $post = $this->getDoctrine()->getRepository('ModelBundle:Post')->findOneBy(array( 'slug' => $slug ));
-        if( $post === null )
-            throw $this->createNotFoundException('Post was not found');
+        $post = $this->getPostManager()->findBySlug($slug);
+
 
         $comment = new \Blog\ModelBundle\Entity\Comment();
 
@@ -92,6 +89,15 @@ class PostController extends Controller
             'post'      => $post,
             'form'      => $form->createView()
         );
+    }
+
+    /**
+     *
+     * @return \Blog\CoreBundle\Services\PostManager
+     */
+    private function getPostManager()
+    {
+        return $this->get('blog.core.post_manager');
     }
 
 }
