@@ -2,8 +2,12 @@
 
 namespace Blog\CoreBundle\Services;
 
+use Blog\ModelBundle\Entity\Comment;
 use Blog\ModelBundle\Entity\Post;
+use Blog\ModelBundle\Form\CommentType;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\Form\FormFactory;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 
@@ -13,14 +17,16 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class PostManager
 {
     private $em;
+    private $formFactory;
 
     /**
      * Construct
      * @param EntityManager $em
      */
-    public function __construct( EntityManager $em )
+    public function __construct( EntityManager $em, FormFactory $formFactory )
     {
         $this->em = $em;
+        $this->formFactory = $formFactory;
     }
 
     /**
@@ -43,7 +49,7 @@ class PostManager
 
     /**
      * Find all posts
-     * @return array|\Blog\ModelBundle\Entity\Post[]
+     * @return array|Post[]
      */
     public function findAll()
     {
@@ -56,7 +62,7 @@ class PostManager
      * Find latest posts
      *
      * @param int $num
-     * @return array|\Blog\ModelBundle\Entity\Post[]
+     * @return array|Post[]
      */
     public function findLatest($num)
     {
@@ -65,5 +71,29 @@ class PostManager
         return $posts;
     }
 
+    public function createComment( Post $post, Request $request )
+    {
+        $comment = new Comment();
+        $comment->setPost($post);
+
+        $form = $this->formFactory->create( new CommentType(), $comment );
+
+        $form->handleRequest($request);
+
+
+        if( $form->isValid() )
+        {
+            $post->addComment( $comment );
+
+
+            $this->em->persist($comment);
+            $this->em->flush();
+
+            return true;
+
+        }
+
+        return $form;
+    }
 
 }

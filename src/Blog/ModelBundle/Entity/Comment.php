@@ -41,7 +41,7 @@ class Comment extends Timestampable
     /**
      * @ORM\ManyToOne(targetEntity="Post", inversedBy="comments")
      * @ORM\JoinColumn(name="post_id", referencedColumnName="id")
-     * //@Assert\NotBlank(message="test3")
+     * @Assert\NotBlank()
      * @var Post
      */
     private $post;

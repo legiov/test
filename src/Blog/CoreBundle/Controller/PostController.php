@@ -65,25 +65,10 @@ class PostController extends Controller
         $post = $this->getPostManager()->findBySlug($slug);
 
 
-        $comment = new \Blog\ModelBundle\Entity\Comment();
+        $session = $this->get('session');
+        $session->getFlashBag()->add('success', 'Your comment was submited successfully');
 
-        $form = $this->createForm( new CommentType(), $comment );
-
-        $form->handleRequest($request);
-
-
-        if( $form->isValid() )
-        {
-            $post->addComment( $comment );
-            $comment->setPost($post);
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($comment);
-            $em->flush();
-            $session = $this->get('session');
-            $session->getFlashBag()->add('success', 'Your comment was submited successfully');
-
-            return $this->redirect( $this->generateUrl('blog_core_post_show', array('slug'=>$post->getSlug())).'#comments');
-        }
+        return $this->redirect( $this->generateUrl('blog_core_post_show', array('slug'=>$post->getSlug())).'#comments');
 
         return array(
             'post'      => $post,
