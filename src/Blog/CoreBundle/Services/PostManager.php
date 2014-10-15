@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Form\Test\FormInterface;
 
 
 /**
@@ -71,8 +72,16 @@ class PostManager
         return $posts;
     }
 
+    /**
+     * Create comment form and save form
+     * @param Post $post
+     * @param Request $request
+     * 
+     * @return boolean|FormInterface
+     */
     public function createComment( Post $post, Request $request )
     {
+                
         $comment = new Comment();
         $comment->setPost($post);
 

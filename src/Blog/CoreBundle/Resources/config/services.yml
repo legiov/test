@@ -19,3 +19,4 @@ services:
         class: %blog.core.post_manager.class%
         arguments:
             - @doctrine.orm.entity_manager
+            - @form.factory

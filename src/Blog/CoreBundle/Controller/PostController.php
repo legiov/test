@@ -10,7 +10,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-
+/**
+ * class PostController
+ * @Route("/{_locale}", requirements={"_locale"="en|ru"}, defaults={"_locale"="en"})
+ */
 class PostController extends Controller
 {
     /**
@@ -64,12 +67,13 @@ class PostController extends Controller
     {
         $post = $this->getPostManager()->findBySlug($slug);
 
-
-        $session = $this->get('session');
-        $session->getFlashBag()->add('success', 'Your comment was submited successfully');
-
-        return $this->redirect( $this->generateUrl('blog_core_post_show', array('slug'=>$post->getSlug())).'#comments');
-
+        $form = $this->getPostManager()->createComment($post, $request);
+        if( TRUE === $form )
+        {
+            $session = $this->get('session');
+            $session->getFlashBag()->add('success', 'Your comment was submited successfully');
+            return $this->redirect( $this->generateUrl('blog_core_post_show', array('slug' => $post->getSlug())).'#comments');
+        }
         return array(
             'post'      => $post,
             'form'      => $form->createView()
