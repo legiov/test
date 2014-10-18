@@ -12,6 +12,17 @@
                 <li><a href="{{ path('main_index') }}">{{ 'blog.core.home' | trans }}</a></li>
             </ul>
         </nav>
+        <ul id="language_selector">
+            {% for locale in avaible_locale %}
+                {% if( locale != app.request.locale ) %}
+                    <li>
+                        <a href="{{ path( app.request.attributes.get('_route'), app.request.attributes.get('_route_params') | merge({'_locale': locale}) ) }}">
+                            {{ locale | trans }}
+                        </a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
     </header>
     {% block sidebar %}{% endblock%}
     <section>

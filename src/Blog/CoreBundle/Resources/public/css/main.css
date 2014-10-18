@@ -37,12 +37,12 @@ header li {
     text-align: center;
 }
 
-header ul#language-selector {
+header ul#language_selector {
     margin-top: -115px;
     float: right;
 }
 
-#language-selector li {
+#language_selector li {
     width: 110px;
 }
 

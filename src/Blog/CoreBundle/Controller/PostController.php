@@ -12,7 +12,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * class PostController
- * @Route("/{_locale}", requirements={"_locale"="en|ru"}, defaults={"_locale"="en"})
+ 
  */
 class PostController extends Controller
 {

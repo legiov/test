@@ -8,7 +8,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
  * Class AuthorController
- * @Route("/{_locale}/author", requirements={"_locale"="en|ru"}, defaults={"_locale"="en"})
+ * //@Route("/author")
+ * @Route("/author")
  */
 class AuthorController extends Controller
 {
