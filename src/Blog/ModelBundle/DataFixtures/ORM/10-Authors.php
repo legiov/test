@@ -15,29 +15,37 @@ use Faker\Factory as FakerFactory;
  */
 class Authres extends AbstractFixture implements OrderedFixtureInterface
 {
+
     /**
      *
      * {@inheritdoc}
      */
     public function load( ObjectManager $manager )
     {
-        $faker = FakerFactory::create('ru_RU');
-        $a1 = new Author();
-        $faker->seed(1111);
-        $a1->setName( $faker->firstName );
+        $faker = FakerFactory::create( 'ru_RU' );
+        $a0    = new Author();
+        
+        $a0->setUsername( 'admin' );
+        $a0->setPlainPassword( 'adminpass' );
+        $a0->setEnabled( TRUE );
+        $a0->setEmail( 'admin@example.ru' );
+        $a0->setRoles( array('ROLE_ADMIN') );
+        $a0->setName( $faker->firstName );
+        $manager->persist( $a0 );
 
-        $a2 = new Author();
-        $faker->seed(1112);
-        $a2->setName( $faker->firstName );
-
-        $a3 = new Author();
-        $faker->seed(1113);
-        $a3->setName( $faker->firstName );
-
-        $manager->persist( $a1 );
-        $manager->persist( $a2 );
-        $manager->persist( $a3 );
-
+        for( $i = 1; $i < 4; $i++ )
+        {
+            $a = new Author();
+            $faker->seed( 1110 + $i );
+            $a->setName( $faker->firstName );
+            $a->setUsername( $faker->userName );
+            $a->setPlainPassword( $faker->userName );
+            $a->setEnabled( TRUE );
+            $a->setEmail( $faker->userName .'@example.ru' );
+            $a->setRoles( array('ROLE_USER') );
+            
+            $manager->persist( $a );
+        }
         $manager->flush();
     }
 

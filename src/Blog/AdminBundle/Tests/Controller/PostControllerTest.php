@@ -22,7 +22,7 @@ class PostControllerTest extends WebTestCase
         
         // Create a new entry in the database
         $crawler = $client->request('GET', '/admin/post/');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /post/");
+        $this->assertTrue( $client->getResponse()->isSuccessful(),'The response was not Successful');
         $crawler = $client->click($crawler->selectLink('Create a new entry')->link());
 
         $author = $crawler->filter('#blog_modelbundle_post_author option:contains("Любовь")')->attr('value');

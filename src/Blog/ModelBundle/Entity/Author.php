@@ -5,6 +5,7 @@ namespace Blog\ModelBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
+use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * Author
@@ -12,7 +13,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Blog\ModelBundle\Repository\AuthorRepository")
  */
-class Author extends Timestampable
+class Author extends BaseUser
 {
     /**
      * @var integer
@@ -21,7 +22,7 @@ class Author extends Timestampable
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
@@ -46,6 +47,31 @@ class Author extends Timestampable
      *
      */
     private $posts;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime")
+     * @Gedmo\Timestampable(on="create")
+     */
+    private $createdAt;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="updated_at", type="datetime")
+     * @Gedmo\Timestampable(on="update")
+     */
+    private $updatedAt;
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->posts = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -80,14 +106,7 @@ class Author extends Timestampable
         return $this->name;
     }
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-
-        $this->posts = new ArrayCollection();
-    }
+    
 
     /**
      * Add posts
@@ -146,6 +165,51 @@ class Author extends Timestampable
     public function __toString()
     {
         return $this->name;
+    }
+    
+    
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     * 
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Get updatedAt
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     */
+    public function setUpdatedAt( \DateTime $updatedAt )
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
     }
 
 }
