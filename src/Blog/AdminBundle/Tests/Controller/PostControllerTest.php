@@ -1,13 +1,13 @@
 <?php
 
-namespace Blog\ModelBundle\Tests\Controller;
+namespace Blog\AdminBundle\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Blog\AdminBundle\Tests\ExtendedCase;
 
 /**
  * class PostControllerTest
  */
-class PostControllerTest extends WebTestCase
+class PostControllerTest extends ExtendedCase
 {
     /**
      * test Post CRUD
@@ -15,10 +15,7 @@ class PostControllerTest extends WebTestCase
     public function testCompleteScenario()
     {
         // Create a new client to browse the application
-        $client = static::createClient( array(),array(
-            'PHP_AUTH_USER' => 'admin',
-            'PHP_AUTH_PW'   => 'adminpass',
-        ));
+        $client = $this->getAuthenticatedClient('admin', 'adminpass');
         
         // Create a new entry in the database
         $crawler = $client->request('GET', '/admin/post/');

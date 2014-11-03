@@ -13,7 +13,7 @@ class SecurityControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/admin/login');
+        $crawler = $client->request('GET', '/login');
         
         $this->assertTrue($client->getResponse()->isSuccessful(), 'Response is not successfull');
         
@@ -21,7 +21,7 @@ class SecurityControllerTest extends WebTestCase
         
         $this->assertCount(1, $crawler->filter('input#username'), 'no username input found');
         $this->assertCount(1, $crawler->filter('input#password'), 'no password input found');
-        $this->assertCount(1, $crawler->filter('button[type=submit]'), 'no submit button found');
+        $this->assertCount(1, $crawler->filter('input[type=submit]'), 'no submit button found');
     }
 
 

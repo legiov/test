@@ -2,19 +2,16 @@
 
 namespace Blog\AdminBundle\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Blog\AdminBundle\Tests\ExtendedCase;
 
-class DefaultControllerTest extends WebTestCase
+class DefaultControllerTest extends ExtendedCase
 {
     /**
      * Admin index test
      */
     public function testIndex()
     {
-        $client = static::createClient( array(),array(
-            'PHP_AUTH_USER' => 'admin',
-            'PHP_AUTH_PW'   => 'adminpass',
-        ));
+        $client = $this->getAuthenticatedClient('admin', 'adminpass');
 
         $client->request('GET', '/admin/');
 

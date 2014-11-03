@@ -23,15 +23,7 @@ class Authres extends AbstractFixture implements OrderedFixtureInterface
     public function load( ObjectManager $manager )
     {
         $faker = FakerFactory::create( 'ru_RU' );
-        $a0    = new Author();
         
-        $a0->setUsername( 'admin' );
-        $a0->setPlainPassword( 'adminpass' );
-        $a0->setEnabled( TRUE );
-        $a0->setEmail( 'admin@example.ru' );
-        $a0->setRoles( array('ROLE_ADMIN') );
-        $a0->setName( $faker->firstName );
-        $manager->persist( $a0 );
 
         for( $i = 1; $i < 4; $i++ )
         {
@@ -46,6 +38,17 @@ class Authres extends AbstractFixture implements OrderedFixtureInterface
             
             $manager->persist( $a );
         }
+        
+        $a0    = new Author();
+        
+        $a0->setUsername( 'admin' );
+        $a0->setPlainPassword( 'adminpass' );
+        $a0->setEnabled( TRUE );
+        $a0->setEmail( 'admin@example.ru' );
+        $a0->setRoles( array('ROLE_ADMIN') );
+        $a0->setName( $faker->firstName );
+        $manager->persist( $a0 );
+        
         $manager->flush();
     }
 
