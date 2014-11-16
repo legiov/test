@@ -6,28 +6,38 @@ use Blog\ModelBundle\Entity\Comment;
 use Blog\ModelBundle\Entity\Post;
 use Blog\ModelBundle\Form\CommentType;
 use Doctrine\ORM\EntityManager;
+use FOS\UserBundle\Model\UserInterface;
 use Symfony\Component\Form\FormFactory;
+use Symfony\Component\Form\Test\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Form\Test\FormInterface;
-
+use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
+use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
+use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
+use Symfony\Component\Security\Acl\Permission\MaskBuilder;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
  * Class AuthorManager
  */
 class PostManager
 {
+
     private $em;
     private $formFactory;
+    private $securityContext;
+    private $aclProvider;
 
     /**
      * Construct
      * @param EntityManager $em
      */
-    public function __construct( EntityManager $em, FormFactory $formFactory )
+    public function __construct( EntityManager $em, FormFactory $formFactory, SecurityContextInterface $sc, MutableAclProviderInterface $aclProvider )
     {
-        $this->em = $em;
-        $this->formFactory = $formFactory;
+        $this->em              = $em;
+        $this->formFactory     = $formFactory;
+        $this->aclProvider     = $aclProvider;
+        $this->securityContext = $sc;
     }
 
     /**
@@ -38,12 +48,12 @@ class PostManager
      */
     public function findBySlug( $slug )
     {
-        $post = $this->em->getRepository('ModelBundle:Post')->findOneBy( array(
+        $post = $this->em->getRepository( 'ModelBundle:Post' )->findOneBy( array(
             'slug' => $slug
-        ));
+                ) );
 
         if( null === $post )
-            throw new NotFoundHttpException('Post was not found');
+            throw new NotFoundHttpException( 'Post was not found' );
 
         return $post;
     }
@@ -54,7 +64,7 @@ class PostManager
      */
     public function findAll()
     {
-        $posts = $this->em->getRepository('ModelBundle:Post')->findAll();
+        $posts = $this->em->getRepository( 'ModelBundle:Post' )->findAll();
 
         return $posts;
     }
@@ -65,9 +75,9 @@ class PostManager
      * @param int $num
      * @return array|Post[]
      */
-    public function findLatest($num)
+    public function findLatest( $num )
     {
-        $posts = $this->em->getRepository('ModelBundle:Post')->findLatest( $num );
+        $posts = $this->em->getRepository( 'ModelBundle:Post' )->findLatest( $num );
 
         return $posts;
     }
@@ -79,15 +89,15 @@ class PostManager
      * 
      * @return boolean|FormInterface
      */
-    public function createComment( Post $post, Request $request )
+    public function createComment( Post $post, Request $request, $commentType )
     {
-                
+
         $comment = new Comment();
-        $comment->setPost($post);
+        $comment->setPost( $post );
 
-        $form = $this->formFactory->create( new CommentType(), $comment );
+        $form = $this->formFactory->create( $commentType, $comment );
 
-        $form->handleRequest($request);
+        $form->handleRequest( $request );
 
 
         if( $form->isValid() )
@@ -95,11 +105,25 @@ class PostManager
             $post->addComment( $comment );
 
 
-            $this->em->persist($comment);
+            $this->em->persist( $comment );
             $this->em->flush();
 
-            return true;
+            $user = $this->securityContext->getToken()->getUser();
 
+            if( $user instanceof UserInterface )
+            {
+                //create ACL
+                $objectIdentity = ObjectIdentity::fromDomainObject( $comment );
+                $acl            = $this->aclProvider->createAcl( $objectIdentity );
+
+                //securIdentity
+                $securityIdentity = UserSecurityIdentity::fromAccount( $user );
+                $acl->insertObjectAce( $securityIdentity, MaskBuilder::MASK_OWNER );
+
+                $this->aclProvider->updateAcl( $acl );
+            }
+
+            return true;
         }
 
         return $form;

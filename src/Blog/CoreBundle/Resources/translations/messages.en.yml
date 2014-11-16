@@ -20,6 +20,8 @@ blog:
       author: Author name
       send: Send
       write: Write comment
+      edit: Edit
+      comment: Comment
 
 ru: Russian
 en: English

@@ -20,3 +20,5 @@ services:
         arguments:
             - @doctrine.orm.entity_manager
             - @form.factory
+            - @security.context
+            - @security.acl.provider

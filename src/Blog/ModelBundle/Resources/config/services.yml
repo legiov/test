@@ -1,0 +1,8 @@
+parameters:
+    blog.model.comment_type.class: Blog\ModelBundle\Form\CommentType
+
+services:
+    blog.model.comment_type:
+        class: %blog.model.comment_type.class%
+        arguments:
+            - @security.context

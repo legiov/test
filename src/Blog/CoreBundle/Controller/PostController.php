@@ -12,22 +12,23 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * class PostController
- 
+
  */
 class PostController extends Controller
 {
+
     /**
      * @Route("/", name="main_index")
      * @Template()
      */
     public function indexAction()
     {
-        $posts = $this->getPostManager()->findAll();
-        $latastPosts = $this->getPostManager()->findLatest(3);
+        $posts       = $this->getPostManager()->findAll();
+        $latastPosts = $this->getPostManager()->findLatest( 3 );
 
         return array(
-            'posts'         => $posts,
-            'latest_posts'  => $latastPosts
+            'posts'        => $posts,
+            'latest_posts' => $latastPosts
         );
     }
 
@@ -43,13 +44,13 @@ class PostController extends Controller
      */
     public function showAction( $slug )
     {
-        $post = $this->getPostManager()->findBySlug($slug);
+        $post = $this->getPostManager()->findBySlug( $slug );
 
-        $form = $this->createForm( new CommentType() );
+        $form = $this->createForm( $this->get( 'blog.model.comment_type' ) );
 
         return array(
-            'post'      => $post,
-            'form'      => $form->createView()
+            'post' => $post,
+            'form' => $form->createView()
         );
     }
 
@@ -65,18 +66,21 @@ class PostController extends Controller
      */
     public function createCommentAction( Request $request, $slug )
     {
-        $post = $this->getPostManager()->findBySlug($slug);
+        $post = $this->getPostManager()->findBySlug( $slug );
 
-        $form = $this->getPostManager()->createComment($post, $request);
+        $commentType = $this->get( 'blog.model.comment_type' );
+
+        $form = $this->getPostManager()->createComment( $post, $request, $commentType );
         if( TRUE === $form )
         {
-            $session = $this->get('session');
-            $session->getFlashBag()->add('success', 'Your comment was submited successfully');
-            return $this->redirect( $this->generateUrl('blog_core_post_show', array('slug' => $post->getSlug())).'#comments');
+            $session = $this->get( 'session' );
+            $session->getFlashBag()->add( 'success', 'Your comment was submited successfully' );
+            return $this->redirect( $this->generateUrl( 'blog_core_post_show', array(
+                                'slug' => $post->getSlug() ) ) . '#comments' );
         }
         return array(
-            'post'      => $post,
-            'form'      => $form->createView()
+            'post' => $post,
+            'form' => $form->createView()
         );
     }
 
@@ -86,7 +90,7 @@ class PostController extends Controller
      */
     private function getPostManager()
     {
-        return $this->get('blog.core.post_manager');
+        return $this->get( 'blog.core.post_manager' );
     }
 
 }
