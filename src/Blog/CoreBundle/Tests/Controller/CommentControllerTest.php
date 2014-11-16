@@ -31,12 +31,12 @@ class CommentControllerTest extends ExtendedCase
         $crawler = $client->followRedirect();
 
         // Check data in the show view
-        $this->assertGreaterThan(0, $crawler->filter('td:contains("Test body")')->count(), 'Missing element td:contains("Test")');
+        $this->assertGreaterThan(0, $crawler->filter('div:contains("Test body")')->count(), 'Missing element td:contains("Test")');
 
         // Edit the entity
         $crawler = $client->click($crawler->selectLink('Edit')->link());
 
-        $form = $crawler->selectButton('Update')->form(array(
+        $form = $crawler->selectButton('Send')->form(array(
             'blog_modelbundle_comment[body]'  => 'Foo',
         ));
 
@@ -44,12 +44,14 @@ class CommentControllerTest extends ExtendedCase
         $crawler = $client->followRedirect();
 
         // Check the element contains an attribute with value equals "Foo"
-        $this->assertGreaterThan(0, $crawler->filter('td:contains("Foo")')->count(), 'Missing element td:contains("Foo")');
+        $this->assertGreaterThan(0, $crawler->filter('div:contains("Foo")')->count(), 'Missing element td:contains("Foo")');
 
+        $crawler = $client->click($crawler->selectLink('Edit')->link());
+        
         // Delete the entity
         $client->submit($crawler->selectButton('Delete')->form());
         $crawler = $client->followRedirect();
-
+        
         // Check the entity has been delete on the list
         $this->assertNotRegExp('/Foo/', $client->getResponse()->getContent());
     }
