@@ -58,7 +58,7 @@ class Post extends Timestampable
     /**
      *
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="Comment", mappedBy="post", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="Comment\ModelBundle\Entity\Comment", mappedBy="commentObject", cascade={"remove"})
      */
     private $comments;
 
@@ -175,10 +175,10 @@ class Post extends Timestampable
     /**
      * Add comments
      *
-     * @param \Blog\ModelBundle\Entity\Comment $comments
+     * @param \Comment\ModelBundle\Entity\Comment $comments
      * @return Post
      */
-    public function addComment(\Blog\ModelBundle\Entity\Comment $comments)
+    public function addComment(  \Comment\ModelBundle\Entity\Comment $comments)
     {
         $this->comments[] = $comments;
 
@@ -188,9 +188,9 @@ class Post extends Timestampable
     /**
      * Remove comments
      *
-     * @param \Blog\ModelBundle\Entity\Comment $comments
+     * @param \Comment\ModelBundle\Entity\Comment $comments
      */
-    public function removeComment(\Blog\ModelBundle\Entity\Comment $comments)
+    public function removeComment(  \Comment\ModelBundle\Entity\Comment $comments)
     {
         $this->comments->removeElement($comments);
     }

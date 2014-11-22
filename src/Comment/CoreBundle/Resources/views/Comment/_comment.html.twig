@@ -9,7 +9,7 @@
     <div class="comment-edit-wraper">
         <p>{{ comment.body | nl2br }}</p>
         {% if is_granted('EDIT', comment) %}
-        <a class="comment-edit-link" href="{{ path('blog_core_comment_edit',{id: comment.id }) }}">{{ 'blog.core.comment.edit' | trans }}</a>
+        <a class="comment-edit-link" href="{{ path('comment_core_comment_edit',{id: comment.id }) }}">{{ 'blog.core.comment.edit' | trans }}</a>
         {% endif %}
     </div>
 </article>

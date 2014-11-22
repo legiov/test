@@ -1,0 +1,12 @@
+parameters:
+    comment.manager.class: Comment\CoreBundle\Services\Manager
+    
+services:
+    comment.manager:
+        class: %comment.manager.class%
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @form.factory
+            - @security.context
+            - @security.acl.provider
+            - @comment.model.comment_type

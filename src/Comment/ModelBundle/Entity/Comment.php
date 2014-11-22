@@ -1,6 +1,6 @@
 <?php
 
-namespace Blog\ModelBundle\Entity;
+namespace Comment\ModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Comment
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Comment\ModelBundle\Repository\CommentRepository")
  */
 class Comment extends Timestampable
 {
@@ -39,12 +39,12 @@ class Comment extends Timestampable
     private $body;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Post", inversedBy="comments")
-     * @ORM\JoinColumn(name="post_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Blog\ModelBundle\Entity\Post", inversedBy="comments")
+     * @ORM\JoinColumn(name="comment_object_id", referencedColumnName="id")
      * @Assert\NotBlank()
      * @var Post
      */
-    private $post;
+    private $commentObject;
 
 
     /**
@@ -103,26 +103,28 @@ class Comment extends Timestampable
         return $this->body;
     }
 
+    
+
     /**
-     * Set post
+     * Set commentObject
      *
-     * @param \Blog\ModelBundle\Entity\Post $post
+     * @param  $commentObject
      * @return Comment
      */
-    public function setPost(\Blog\ModelBundle\Entity\Post $post = null)
+    public function setCommentObject( $commentObject = null)
     {
-        $this->post = $post;
-
+        $this->commentObject = $commentObject;
+    
         return $this;
     }
 
     /**
-     * Get post
+     * Get commentObject
      *
-     * @return \Blog\ModelBundle\Entity\Post
+     * @return  
      */
-    public function getPost()
+    public function getCommentObject()
     {
-        return $this->post;
+        return $this->commentObject;
     }
 }

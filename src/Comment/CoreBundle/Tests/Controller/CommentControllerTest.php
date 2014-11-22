@@ -1,8 +1,8 @@
 <?php
 
-namespace Blog\CoreBundle\Tests\Controller;
+namespace Comment\CoreBundle\Tests\Controller;
 
-use Blog\CoreBundle\Tests\ExtendedCase;
+use Comment\CoreBundle\Tests\ExtendedCase;
 
 class CommentControllerTest extends ExtendedCase
 {
@@ -24,7 +24,7 @@ class CommentControllerTest extends ExtendedCase
         
         // Fill in the form and submit it
         $form = $crawler->selectButton('Send')->form(array(
-            'blog_modelbundle_comment[body]'  => 'Test body',
+            'comment_modelbundle_comment[body]'  => 'Test body',
         ));
 
         $client->submit($form);
@@ -37,7 +37,7 @@ class CommentControllerTest extends ExtendedCase
         $crawler = $client->click($crawler->selectLink('Edit')->link());
 
         $form = $crawler->selectButton('Send')->form(array(
-            'blog_modelbundle_comment[body]'  => 'Foo',
+            'comment_modelbundle_comment[body]'  => 'Foo',
         ));
 
         $client->submit($form);
@@ -54,6 +54,33 @@ class CommentControllerTest extends ExtendedCase
         
         // Check the entity has been delete on the list
         $this->assertNotRegExp('/Foo/', $client->getResponse()->getContent());
+    }
+    
+    /**
+     * Test create comment
+     */
+    public function testCommentCreate()
+    {
+        $client = static::createClient();
+
+        $post = $client->getContainer()->get('doctrine')->getRepository('ModelBundle:Post')->findFirst();
+
+        $crawler = $client->request('GET', '/'. $post->getSlug() );
+
+        $button = $crawler->selectButton('Send');
+
+        $form = $button->form( array(
+            'comment_modelbundle_comment[authorName]'  => 'some name',
+            'comment_modelbundle_comment[body]'        => 'some text'
+        ));
+
+        $client->submit($form);
+
+        $this->assertTrue( $client->getResponse()->isRedirect('/'. $post->getSlug().'#comments' ), 'There is no redirection' );
+        $crawler = $client->followRedirect();
+
+
+        $this->assertCount( 1, $crawler->filter('html:contains("Your comment was submited successfully")'), 'There was no confirmation massage');
     }
 
     

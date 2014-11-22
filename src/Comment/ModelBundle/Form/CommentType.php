@@ -1,12 +1,13 @@
 <?php
 
-namespace Blog\ModelBundle\Form;
+namespace Comment\ModelBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class CommentType extends AbstractType
@@ -14,7 +15,7 @@ class CommentType extends AbstractType
 
     private $securityContext;
 
-    public function __construct( \Symfony\Component\Security\Core\SecurityContextInterface $sc )
+    public function __construct( SecurityContextInterface $sc )
     {
         $this->securityContext = $sc;
     }
@@ -58,7 +59,7 @@ class CommentType extends AbstractType
     public function setDefaultOptions( OptionsResolverInterface $resolver )
     {
         $resolver->setDefaults( array(
-            'data_class' => 'Blog\ModelBundle\Entity\Comment'
+            'data_class' => 'Comment\ModelBundle\Entity\Comment'
         ) );
     }
 
@@ -67,7 +68,7 @@ class CommentType extends AbstractType
      */
     public function getName()
     {
-        return 'blog_modelbundle_comment';
+        return 'comment_modelbundle_comment';
     }
 
 }

@@ -1,0 +1,33 @@
+/*src/Blog/CoreBundle/Resources/public/css*/
+
+
+article.comment p {
+    margin-top: 0;
+}
+
+
+form label {
+    display: block;
+    font-style: italic;
+}
+
+form input {
+    width: 300px;
+}
+
+form textarea {
+    width: 500px;
+    height: 150px;
+}
+
+form ul li {
+    list-style-type: none;
+    color: red;
+}
+
+p.session-message {
+    padding: 5px;
+    background-color: #007d00;
+    color: #fff;
+}
+

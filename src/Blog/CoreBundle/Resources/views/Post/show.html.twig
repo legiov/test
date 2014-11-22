@@ -24,18 +24,7 @@
         </p>
 
     </article>
-    <a id="comments"></a>
-    <h2>{{ 'blog.core.post.comment.plural' | trans }}</h2>
-
-    {% for comment in post.comments %}
-        {{ include('CoreBundle:Post:_comment.html.twig', {comment: comment}) }}
-    {% endfor %}
-
-    {% for mess in app.session.flashBag.get('success') %}
-        {{ mess }}
-    {% endfor %}
-
-    <h4>{{ 'blog.core.comment.write' | trans }}</h4>
-
-    {{ form(form, { action : path('blog_core_post_createcomment', { slug: post.slug }) ~ '#comments' }) }}
+    <div class="comment-wraper">
+        {{ render( controller( 'CommentCoreBundle:Comment:comments', {'slug': post.slug}) ) }}
+    </div>
 {% endblock %}

@@ -1,0 +1,20 @@
+
+<a id="comments"></a>
+<h2>{{ 'blog.core.post.comment.plural' | trans }}</h2>
+
+{% for comment in comments %}
+    {{ include('CommentCoreBundle:Comment:_comment.html.twig', {comment: comment}) }}
+{% endfor %}
+
+{% for mess in app.session.flashBag.get('success') %}
+    {{ mess }}
+{% endfor %}
+
+<h4>{{ 'blog.core.comment.write' | trans }}</h4>
+
+{{ form(form, { action : path('comment_core_comment_create', { slug: object.slug }) ~ '#comments' }) }}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/commentcore/js/main.js') }}"></script>
+{% endblock %}

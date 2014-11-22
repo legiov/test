@@ -1,9 +1,8 @@
 <?php
 
-namespace Blog\CoreBundle\Controller;
+namespace Comment\CoreBundle\Controller;
 
-use Blog\ModelBundle\Entity\Comment;
-use Blog\ModelBundle\Form\CommentType;
+use Comment\ModelBundle\Entity\Comment;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -23,6 +22,30 @@ class CommentController extends Controller
     /**
      * Lists all Comment entities.
      *
+     * @Route("/object/{slug}")
+     * @Method("GET")
+     * @Template()
+     * @return array
+     */
+    public function commentsAction( $slug, Request $request )
+    {
+        $em = $this->getDoctrine()->getManager();
+        
+        $object = $this->get('blog.core.post_manager')->findBySlug( $slug );
+        
+        $form = $this->getManager()->createComment( $object, $request );
+
+        $comments = $em->getRepository( 'CommentModelBundle:Comment' )->findBy( array( 'commentObject' => $object ) );
+
+        return array(
+            'comments' => $comments,
+            'object'   => $object,
+            'form'     => $form->createView()
+        );
+    }
+    /**
+     * Lists all Comment entities.
+     *
      * @Route("/")
      * @Method("GET")
      * @Template()
@@ -32,7 +55,7 @@ class CommentController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository( 'ModelBundle:Comment' )->findAll();
+        $entities = $em->getRepository( 'CommentModelBundle:Comment' )->findAll();
 
         return array(
             'entities' => $entities,
@@ -51,7 +74,7 @@ class CommentController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository( 'ModelBundle:Comment' )->find( $id );
+        $entity = $em->getRepository( 'CommentModelBundle:Comment' )->find( $id );
 
         if( !$entity )
         {
@@ -63,6 +86,35 @@ class CommentController extends Controller
         return array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
+        );
+    }
+    
+    /**
+     * @param Request $request
+     * @param string $slug
+     *
+     * @return array
+     *
+     * @Method({"POST"})
+     * @Route("/{slug}/create_comment")
+     * @Template("CoreBundle:Post:show.html.twig")
+     */
+    public function createAction( Request $request, $slug )
+    {
+        $post = $this->get('blog.core.post_manager')->findBySlug( $slug );
+
+        $form = $this->getManager()->createComment( $post, $request );
+        
+        if( TRUE === $form )
+        {
+            $session = $this->get( 'session' );
+            $session->getFlashBag()->add( 'success', 'Your comment was submited successfully' );
+            return $this->redirect( $this->generateUrl( 'blog_core_post_show', array(
+                                'slug' => $post->getSlug() ) ) . '#comments' );
+        }
+        return array(
+            'post' => $post,
+            'form' => $form->createView()
         );
     }
 
@@ -78,7 +130,7 @@ class CommentController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository( 'ModelBundle:Comment' )->find( $id );
+        $entity = $em->getRepository( 'CommentModelBundle:Comment' )->find( $id );
 
         if( !$entity )
         {
@@ -104,8 +156,8 @@ class CommentController extends Controller
      */
     private function createEditForm( Comment $entity )
     {
-        $form = $this->createForm( $this->get( 'blog.model.comment_type' ), $entity, array(
-            'action' => $this->generateUrl( 'blog_core_comment_update', array(
+        $form = $this->createForm( $this->get( 'comment.model.comment_type' ), $entity, array(
+            'action' => $this->generateUrl( 'comment_core_comment_update', array(
                 'id' => $entity->getId() ) ),
             'method' => 'PUT',
                 ) );
@@ -125,7 +177,7 @@ class CommentController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository( 'ModelBundle:Comment' )->find( $id );
+        $entity = $em->getRepository( 'CommentModelBundle:Comment' )->find( $id );
 
         if( !$entity )
         {
@@ -148,7 +200,7 @@ class CommentController extends Controller
             $em->flush();
 
             return $this->redirect( $this->generateUrl( 'blog_core_post_show', array(
-                                'slug' => $entity->getPost()->getSlug() ) ) );
+                                'slug' => $entity->getCommentObject()->getSlug() ) ) );
         }
 
         return array(
@@ -177,7 +229,7 @@ class CommentController extends Controller
         if( $form->isValid() )
         {
             $em     = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository( 'ModelBundle:Comment' )->find( $id );
+            $entity = $em->getRepository( 'CommentModelBundle:Comment' )->find( $id );
 
             if( !$entity )
             {
@@ -193,7 +245,7 @@ class CommentController extends Controller
             $em->remove( $entity );
             $em->flush();
             $url = $this->generateUrl( 'blog_core_post_show', array(
-                'slug' => $entity->getPost()->getSlug() )
+                'slug' => $entity->getCommentObject()->getSlug() )
             );
         }
         $url ? $url : $ure = $this->generateUrl( 'blog_core_post_index' );
@@ -211,13 +263,18 @@ class CommentController extends Controller
     private function createDeleteForm( $id )
     {
         return $this->createFormBuilder()
-                        ->setAction( $this->generateUrl( 'blog_core_comment_delete', array(
+                        ->setAction( $this->generateUrl( 'comment_core_comment_delete', array(
                                     'id' => $id ) ) )
                         ->setMethod( 'DELETE' )
                         ->add( 'submit', 'submit', array(
                             'label' => 'Delete' ) )
                         ->getForm()
         ;
+    }
+    
+    public function getManager()
+    {
+        return $this->get('comment.manager');
     }
 
 }

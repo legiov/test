@@ -1,9 +1,8 @@
 <?php
 
-namespace Blog\ModelBundle\DataFixtures\ORM;
+namespace Comment\ModelBundle\DataFixtures\ORM;
 
-use Blog\ModelBundle\Entity\Comment;
-use Blog\ModelBundle\Entity\Post;
+use Comment\ModelBundle\Entity\Comment;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -28,7 +27,7 @@ class Comments extends AbstractFixture implements OrderedFixtureInterface
             $comment = new Comment();
             $comment->setAuthorName( $faker->firstName );
             $comment->setBody( $faker->paragraph(3) );
-            $comment->setPost( $post );
+            $comment->setCommentObject( $post );
 
             $manager->persist( $comment );
         }

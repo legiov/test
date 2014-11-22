@@ -2,19 +2,12 @@
 
 namespace Blog\CoreBundle\Services;
 
-use Blog\ModelBundle\Entity\Comment;
+
 use Blog\ModelBundle\Entity\Post;
-use Blog\ModelBundle\Form\CommentType;
 use Doctrine\ORM\EntityManager;
-use FOS\UserBundle\Model\UserInterface;
 use Symfony\Component\Form\FormFactory;
-use Symfony\Component\Form\Test\FormInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
-use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
 use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
-use Symfony\Component\Security\Acl\Permission\MaskBuilder;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
@@ -82,51 +75,5 @@ class PostManager
         return $posts;
     }
 
-    /**
-     * Create comment form and save form
-     * @param Post $post
-     * @param Request $request
-     * 
-     * @return boolean|FormInterface
-     */
-    public function createComment( Post $post, Request $request, $commentType )
-    {
-
-        $comment = new Comment();
-        $comment->setPost( $post );
-
-        $form = $this->formFactory->create( $commentType, $comment );
-
-        $form->handleRequest( $request );
-
-
-        if( $form->isValid() )
-        {
-            $post->addComment( $comment );
-
-
-            $this->em->persist( $comment );
-            $this->em->flush();
-
-            $user = $this->securityContext->getToken()->getUser();
-
-            if( $user instanceof UserInterface )
-            {
-                //create ACL
-                $objectIdentity = ObjectIdentity::fromDomainObject( $comment );
-                $acl            = $this->aclProvider->createAcl( $objectIdentity );
-
-                //securIdentity
-                $securityIdentity = UserSecurityIdentity::fromAccount( $user );
-                $acl->insertObjectAce( $securityIdentity, MaskBuilder::MASK_OWNER );
-
-                $this->aclProvider->updateAcl( $acl );
-            }
-
-            return true;
-        }
-
-        return $form;
-    }
 
 }
