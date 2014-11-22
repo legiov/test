@@ -22,16 +22,16 @@ class CommentController extends Controller
     /**
      * Lists all Comment entities.
      *
-     * @Route("/object/{slug}")
+     * @Route("/object/{id}")
      * @Method("GET")
      * @Template()
      * @return array
      */
-    public function commentsAction( $slug, Request $request )
+    public function commentsAction( $id, Request $request )
     {
         $em = $this->getDoctrine()->getManager();
         
-        $object = $this->get('blog.core.post_manager')->findBySlug( $slug );
+        $object = $this->getManager()->findCommentObjectById( $id );
         
         $form = $this->getManager()->createComment( $object, $request );
 
@@ -91,17 +91,17 @@ class CommentController extends Controller
     
     /**
      * @param Request $request
-     * @param string $slug
+     * @param string $id
      *
      * @return array
      *
      * @Method({"POST"})
-     * @Route("/{slug}/create_comment")
+     * @Route("/{id}/create_comment")
      * @Template("CoreBundle:Post:show.html.twig")
      */
-    public function createAction( Request $request, $slug )
+    public function createAction( Request $request, $id )
     {
-        $post = $this->get('blog.core.post_manager')->findBySlug( $slug );
+        $post = $this->getManager()->findCommentObjectById( $id );
 
         $form = $this->getManager()->createComment( $post, $request );
         

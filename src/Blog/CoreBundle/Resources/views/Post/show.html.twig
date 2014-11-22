@@ -25,6 +25,6 @@
 
     </article>
     <div class="comment-wraper">
-        {{ render( controller( 'CommentCoreBundle:Comment:comments', {'slug': post.slug}) ) }}
+        {{ render( controller( 'CommentCoreBundle:Comment:comments', {'id': post.id}) ) }}
     </div>
 {% endblock %}

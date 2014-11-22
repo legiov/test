@@ -10,3 +10,4 @@ services:
             - @security.context
             - @security.acl.provider
             - @comment.model.comment_type
+            - %doctrine_resolve_class%

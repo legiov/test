@@ -4,6 +4,7 @@ imports:
     
 parameters:
     avaible_locale: [ru,en]
+    doctrine_resolve_class: Blog\ModelBundle\Entity\Post
 
 framework:
     #esi:             ~
@@ -67,6 +68,9 @@ doctrine:
     orm:
         auto_generate_proxy_classes: %kernel.debug%
         auto_mapping: true
+        resolve_target_entities:
+            Blog\ModelBundle\Model\CommentInterface: Comment\ModelBundle\Entity\Comment
+            Comment\ModelBundle\Model\CommentObjectInterface: %doctrine_resolve_class%
 
 # Swiftmailer Configuration
 swiftmailer:

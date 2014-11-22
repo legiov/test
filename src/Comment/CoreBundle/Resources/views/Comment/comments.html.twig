@@ -12,7 +12,7 @@
 
 <h4>{{ 'blog.core.comment.write' | trans }}</h4>
 
-{{ form(form, { action : path('comment_core_comment_create', { slug: object.slug }) ~ '#comments' }) }}
+{{ form(form, { action : path('comment_core_comment_create', { id: object.id }) ~ '#comments' }) }}
 
 {% block javascripts %}
     <script type="text/javascript" src="{{ asset('http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js') }}"></script>

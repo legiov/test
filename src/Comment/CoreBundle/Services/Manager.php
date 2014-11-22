@@ -27,18 +27,27 @@ class Manager
     private $securityContext;
     private $aclProvider;
     private $commentType;
+    private $class;
 
     /**
      * Construct
      * @param EntityManager $em
      */
-    public function __construct( EntityManager $em, FormFactory $formFactory, SecurityContextInterface $sc, MutableAclProviderInterface $aclProvider, CommentType $cf )
+    public function __construct(
+            EntityManager $em,
+            FormFactory $formFactory,
+            SecurityContextInterface $sc,
+            MutableAclProviderInterface $aclProvider,
+            CommentType $cf,
+            $class 
+            )
     {
         $this->em              = $em;
         $this->formFactory     = $formFactory;
         $this->aclProvider     = $aclProvider;
         $this->securityContext = $sc;
         $this->commentType     = $cf;
+        $this->class           = $class;
     }
 
     /**
@@ -47,14 +56,14 @@ class Manager
      * @return Comment
      * @throws NotFoundHttpException
      */
-    public function findById( $id )
+    public function findCommentObjectById( $id )
     {
-        $comment = $this->em->getRepository( 'CommentModelBundle:Comment' )->find( $id );
+        $object = $this->em->getRepository( $this->class )->find( $id );
 
-        if( null === $comment )
-            throw new NotFoundHttpException( 'comment was not found' );
+        if( null === $object )
+            throw new NotFoundHttpException( 'comment object was not found' );
 
-        return $comment;
+        return $object;
     }
 
     /**
