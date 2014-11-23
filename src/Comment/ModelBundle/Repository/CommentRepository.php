@@ -27,6 +27,22 @@ class CommentRepository extends EntityRepository
     }
     
     /**
+     *
+     * @param int $object
+     * @return array
+     */
+    public function countObjectComments( $object )
+    {
+        $qb = $this->getQueryBuilder()
+            ->select('count(c)')
+            ->where( 'c.commentObject = :object')
+            ->setParameter( 'object', $object )
+        ;
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+    
+    /**
      * Return the first post
      * @return Author
      */

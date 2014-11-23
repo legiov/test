@@ -96,6 +96,27 @@ class CommentController extends Controller
      * @return array
      *
      * @Method({"POST"})
+     * @Route("/{id}/count_comments")
+     * @Template()
+     */
+    public function commentsCountAction( $id )
+    {
+        $object = $this->getManager()->findCommentObjectById( $id );
+
+        $count = $this->getDoctrine()->getRepository( 'CommentModelBundle:Comment')->countObjectComments( $object );
+        
+        return array(
+            'count' => $count,
+        );
+    }
+    
+    /**
+     * @param Request $request
+     * @param string $id
+     *
+     * @return array
+     *
+     * @Method({"POST"})
      * @Route("/{id}/create_comment")
      * @Template("CoreBundle:Post:show.html.twig")
      */
