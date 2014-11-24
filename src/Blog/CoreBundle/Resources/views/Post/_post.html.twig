@@ -6,7 +6,7 @@
             <time datetime="{{ post.createdAt | date('c') }}">{{ post.createdAt | date }}</time>
             {{ 'blog.core.post.by' | trans }} <a href="{{ path('author_show', {slug:post.author.slug}) }}">{{ post.author.name }}</a>
             <a href="{{ path('blog_core_post_show', {slug: post.slug}) }}#coments">
-                {{ render( controller('CommentCoreBundle:Comment:commentsCount',{'id': post.id })) }}
+                {{ comments_count( post ) }}
             </a>
         </p>
     </header>

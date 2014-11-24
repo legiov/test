@@ -1,5 +1,6 @@
 parameters:
     comment.manager.class: Comment\CoreBundle\Services\Manager
+    comment.twig_extension.class: Comment\CoreBundle\TwigExtension\CommentExtension
     
 services:
     comment.manager:
@@ -11,3 +12,10 @@ services:
             - @security.acl.provider
             - @comment.model.comment_type
             - %doctrine_resolve_class%
+            
+    comment.twig_extension:
+        class: %comment.twig_extension.class%
+        arguments:
+            - @fragment.handler
+        tags:
+            - { name: twig.extension }
