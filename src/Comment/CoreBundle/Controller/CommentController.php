@@ -35,7 +35,7 @@ class CommentController extends Controller
         
         $form = $this->getManager()->createComment( $object, $request );
 
-        $comments = $em->getRepository( 'CommentModelBundle:Comment' )->findBy( array( 'commentObject' => $object ) );
+        $comments = $em->getRepository( 'CommentModelBundle:Comment' )->findBy( array( 'comment_object' => $object ) );
 
         return array(
             'comments' => $comments,

@@ -1,8 +1,10 @@
-#parameters:
-#    blog.model.comment_type.class: Blog\ModelBundle\Form\CommentType
-#
-#services:
-#    blog.model.comment_type:
-#        class: %blog.model.comment_type.class%
-#        arguments:
-#            - @security.context
+parameters:
+    blog.model.comment_type.class: Blog\ModelBundle\EventListner\DynamicRelationSubscriber
+
+services:
+    dynamic_relation.subscriber:
+        class: %dynamic_relation.subscriber.class%
+        arguments:
+            - %comment_resolve_class%
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }

@@ -5,8 +5,6 @@ namespace Blog\ModelBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Blog\ModelBundle\Model\CommentInterface;
-use Comment\ModelBundle\Model\CommentObjectInterface;
 
 /**
  * Post
@@ -14,7 +12,7 @@ use Comment\ModelBundle\Model\CommentObjectInterface;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Blog\ModelBundle\Repository\PostRepository")
  */
-class Post extends Timestampable implements CommentObjectInterface
+class Post extends Timestampable
 {
     /**
      * @var integer
@@ -60,7 +58,6 @@ class Post extends Timestampable implements CommentObjectInterface
     /**
      *
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="Blog\ModelBundle\Model\CommentInterface", mappedBy="commentObject", cascade={"remove"})
      */
     private $comments;
 
@@ -180,7 +177,7 @@ class Post extends Timestampable implements CommentObjectInterface
      * @param \Comment\ModelBundle\Entity\Comment $comments
      * @return Post
      */
-    public function addComment( CommentInterface $comments)
+    public function addComment( $comments)
     {
         $this->comments[] = $comments;
 
@@ -192,7 +189,7 @@ class Post extends Timestampable implements CommentObjectInterface
      *
      * @param \Comment\ModelBundle\Entity\Comment $comments
      */
-    public function removeComment( CommentInterface $comments)
+    public function removeComment( $comments)
     {
         $this->comments->removeElement($comments);
     }

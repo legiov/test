@@ -35,7 +35,7 @@ class CommentRepository extends EntityRepository
     {
         $qb = $this->getQueryBuilder()
             ->select('count(c)')
-            ->where( 'c.commentObject = :object')
+            ->where( 'c.comment_object = :object')
             ->setParameter( 'object', $object )
         ;
 
