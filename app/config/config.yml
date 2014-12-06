@@ -38,6 +38,7 @@ twig:
     strict_variables: %kernel.debug%
     globals:
         avaible_locale: %avaible_locale%
+        bundle_resolver: @blog.core.bundle_resolver
 
 # Assetic Configuration
 assetic:

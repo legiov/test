@@ -8,6 +8,7 @@
 
 namespace Blog\ModelBundle\EventListner;
 
+use Blog\CoreBundle\Services\BundleResolver;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Events;
@@ -24,10 +25,13 @@ class DynamicRelationSubscriber implements EventSubscriber
     const COMMENT_ENTITY_PATH = "Blog\ModelBundle\Entity\Blog";
     
     private $resolveClass;
-    
-    public function __construct( $resolveClass )
+    private $bundleResolver;
+
+
+    public function __construct( $resolveClass, BundleResolver $bundleResolver )
     {
         $this->resolveClass = $resolveClass;
+        $this->bundleResolver = $bundleResolver;
     }
 
     public function getSubscribedEvents()
@@ -42,7 +46,7 @@ class DynamicRelationSubscriber implements EventSubscriber
         /** @var $metadata ClassMetadata */
         $metadata = $args->getClassMetadata();
         
-        if( $metadata->getName() != self::COMMENT_ENTITY_PATH )
+        if( !$this->bundleResolver->bundleIsset('comment') || $metadata->getName() != self::COMMENT_ENTITY_PATH )
             return;
         
         $namingStrategy = $args

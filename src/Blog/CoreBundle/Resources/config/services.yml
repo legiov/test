@@ -2,6 +2,7 @@ parameters:
     blog.core.twig.plural_extension.class:  Blog\CoreBundle\TwigExtension\TransPlural
     blog.core.author_manager.class:         Blog\CoreBundle\Services\AuthorManager
     blog.core.post_manager.class:           Blog\CoreBundle\Services\PostManager
+    blog.core.bundle_resolver.class:        Blog\CoreBundle\Services\BundleResolver
 
 services:
     acme.twig.acme_extension:
@@ -22,3 +23,8 @@ services:
             - @form.factory
             - @security.context
             - @security.acl.provider
+            
+    blog.core.bundle_resolver:
+        class: %blog.core.bundle_resolver.class%
+        arguments:
+            - %kernel.bundles%

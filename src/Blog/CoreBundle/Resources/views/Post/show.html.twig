@@ -24,7 +24,9 @@
         </p>
 
     </article>
-    <div class="comment-wraper">
-        {{ comments_show( post ) }}
-    </div>
+    {% if bundle_resolver.bundleIsset('comment') %}
+        <div class="comment-wraper">
+            {{ comments_show( post ) }}
+        </div>
+    {% endif %}
 {% endblock %}
