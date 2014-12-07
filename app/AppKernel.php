@@ -22,12 +22,16 @@ class AppKernel extends Kernel
             new JMS\I18nRoutingBundle\JMSI18nRoutingBundle(),
             new JMS\TranslationBundle\JMSTranslationBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle(),
+            new FOS\RestBundle\FOSRestBundle(),
+            new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
             
             new Blog\CoreBundle\CoreBundle(),
             new Blog\ModelBundle\ModelBundle(),
             new Blog\AdminBundle\AdminBundle(),
             new Comment\CoreBundle\CommentCoreBundle(),
             new Comment\ModelBundle\CommentModelBundle(),
+            new Comment\ApiBundle\CommentApiBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

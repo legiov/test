@@ -1,0 +1,4 @@
+comment_rest:
+    resource: "@CommentApiBundle/Controller/DefaultController.php"
+    type:     rest
+    methods: [GET]
