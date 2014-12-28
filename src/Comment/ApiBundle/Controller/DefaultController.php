@@ -96,7 +96,7 @@ class DefaultController extends FOSRestController
      * @ApiDoc(
      *  resource=true,
      *  description="function create comment for post and return comment",
-     *  input="Comment\ApiBundle\Form\CommentType",
+     *  input="comment_api_form",
      *  output={
      *      "class"="Comment\ModelBundle\Entity\Comment",
      *      "groups"={"all_user"},
@@ -116,22 +116,7 @@ class DefaultController extends FOSRestController
         $manager = $this->get( 'comment.manager' );
 
         $data = $manager->createComment( null, $request, 'comment_api_form' );
-//        $comment = new Comment();
-//        
-//        $form = $this->createForm( 'comment_api_form', $comment );
-//        $isValid = $form->handleRequest( $request )->isValid();
-//        $isMethod = $request->isMethod( 'POST' );
-//        
-//        if( $isMethod && $isValid )
-//        {
-//            $em = $this->getDoctrine()->getManager();
-//            $em->persist( $comment );
-//            $em->flush();
-//            
-//            $view = $this->setGroup( $comment );
-//            $view->setStatusCode(201);
-//            return $this->handleView( $view );
-//        }
+
         if( $data instanceof Comment )
         {
             $view = $this->setGroup( $data );
