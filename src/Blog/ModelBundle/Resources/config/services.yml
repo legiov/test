@@ -1,9 +1,9 @@
 parameters:
-    dynamic_relation.subscriber.class: Blog\ModelBundle\EventListner\DynamicRelationSubscriber
+    post.dynamic_relation.subscriber.class: Blog\ModelBundle\EventListner\DynamicRelationSubscriber
 
 services:
-    dynamic_relation.subscriber:
-        class: %dynamic_relation.subscriber.class%
+    post.dynamic_relation.subscriber:
+        class: %post.dynamic_relation.subscriber.class%
         arguments:
             - %comment_resolve_class%
             - @blog.core.bundle_resolver
