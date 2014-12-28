@@ -33,7 +33,7 @@ class CommentController extends Controller
         
         $object = $this->getManager()->findCommentObjectById( $id );
         
-        $form = $this->getManager()->createComment( $object, $request );
+        $form = $this->getManager()->createComment( $object, $request, 'comment_form' );
 
         $comments = $em->getRepository( 'CommentModelBundle:Comment' )->findBy( array( 'comment_object' => $object ) );
 
@@ -124,7 +124,7 @@ class CommentController extends Controller
     {
         $post = $this->getManager()->findCommentObjectById( $id );
 
-        $form = $this->getManager()->createComment( $post, $request );
+        $form = $this->getManager()->createComment( $post, $request, 'comment_form' );
         
         if( $form instanceof Comment )
         {

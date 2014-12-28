@@ -29,7 +29,6 @@ class Manager
     private $formFactory;
     private $securityContext;
     private $aclProvider;
-    private $commentType;
     private $class;
     private $eventDispatcher;
 
@@ -38,14 +37,13 @@ class Manager
      * @param EntityManager $em
      */
     public function __construct(
-    EntityManager $em, FormFactory $formFactory, SecurityContextInterface $sc, MutableAclProviderInterface $aclProvider, CommentType $cf, EventDispatcherInterface $ed, $class
+    EntityManager $em, FormFactory $formFactory, SecurityContextInterface $sc, MutableAclProviderInterface $aclProvider, EventDispatcherInterface $ed, $class
     )
     {
         $this->em              = $em;
         $this->formFactory     = $formFactory;
         $this->aclProvider     = $aclProvider;
         $this->securityContext = $sc;
-        $this->commentType     = $cf;
         $this->eventDispatcher = $ed;
         $this->class           = $class;
     }
@@ -98,21 +96,14 @@ class Manager
      * 
      * @return boolean|FormInterface
      */
-    public function createComment( $object, Request $request, $commentForm = NULL )
+    public function createComment( $object, Request $request, $commentForm )
     {
-
         $comment = new Comment();
         $comment->setCommentObject( $object );
 
-        if( $commentForm === NULL )
-        {
-            $commentForm = $this->commentType;
-        }
-        
         $form = $this->formFactory->create( $commentForm, $comment );
 
         $form->handleRequest( $request );
-
 
         if( $form->isValid() )
         {

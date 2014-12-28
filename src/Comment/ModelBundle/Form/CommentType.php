@@ -69,7 +69,7 @@ class CommentType extends AbstractType
      */
     public function getName()
     {
-        return 'comment_modelbundle_comment';
+        return 'comment_form';
     }
 
 }

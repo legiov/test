@@ -24,7 +24,7 @@ class CommentControllerTest extends ExtendedCase
         
         // Fill in the form and submit it
         $form = $crawler->selectButton('Send')->form(array(
-            'comment_modelbundle_comment[body]'  => 'Test body',
+            'comment_form[body]'  => 'Test body',
         ));
 
         $client->submit($form);
@@ -37,7 +37,7 @@ class CommentControllerTest extends ExtendedCase
         $crawler = $client->click($crawler->selectLink('Edit')->link());
 
         $form = $crawler->selectButton('Send')->form(array(
-            'comment_modelbundle_comment[body]'  => 'Foo',
+            'comment_form[body]'  => 'Foo',
         ));
 
         $client->submit($form);
@@ -70,8 +70,8 @@ class CommentControllerTest extends ExtendedCase
         $button = $crawler->selectButton('Send');
 
         $form = $button->form( array(
-            'comment_modelbundle_comment[authorName]'  => 'some name',
-            'comment_modelbundle_comment[body]'        => 'some text'
+            'comment_form[authorName]'  => 'some name',
+            'comment_form[body]'        => 'some text'
         ));
 
         $client->submit($form);

@@ -7,7 +7,8 @@ services:
         class: %comment.model.comment_type.class%
         arguments:
             - @security.context
-            
+        tags:
+            - { name: form.type, alias: comment_form }
     dynamic_relation.subscriber:
         class: %dynamic_relation.subscriber.class%
         arguments:

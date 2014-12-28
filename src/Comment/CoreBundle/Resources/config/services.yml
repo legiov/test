@@ -11,7 +11,6 @@ services:
             - @form.factory
             - @security.context
             - @security.acl.provider
-            - @comment.model.comment_type
             - @event_dispatcher
             - %doctrine_resolve_class%
             
