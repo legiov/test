@@ -38,7 +38,8 @@ class CommentType extends AbstractType
         $builder->addEventListener(
                 FormEvents::POST_SET_DATA, function( FormEvent $event ) use ( $sc )
                 {
-                    $user = $sc->getToken()->getUser();
+                    
+                    $user = $sc ? $sc->getToken()->getUser() : null;
 
                     if( $user instanceof UserInterface )
                     {

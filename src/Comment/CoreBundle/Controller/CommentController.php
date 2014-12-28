@@ -126,7 +126,7 @@ class CommentController extends Controller
 
         $form = $this->getManager()->createComment( $post, $request );
         
-        if( TRUE === $form )
+        if( $form instanceof Comment )
         {
             $session = $this->get( 'session' );
             $session->getFlashBag()->add( 'success', 'Your comment was submited successfully' );

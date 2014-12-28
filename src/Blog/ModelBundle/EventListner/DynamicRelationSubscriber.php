@@ -12,7 +12,6 @@ use Blog\CoreBundle\Services\BundleResolver;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Events;
-use Doctrine\ORM\Mapping\ClassMetadata;
 
 /**
  * Description of DinamicRelationSuscriber
@@ -22,7 +21,7 @@ use Doctrine\ORM\Mapping\ClassMetadata;
 class DynamicRelationSubscriber implements EventSubscriber
 {
     
-    const COMMENT_ENTITY_PATH = "Blog\ModelBundle\Entity\Blog";
+    const COMMENT_ENTITY_PATH = "Blog\ModelBundle\Entity\Post";
     
     private $resolveClass;
     private $bundleResolver;
@@ -48,12 +47,7 @@ class DynamicRelationSubscriber implements EventSubscriber
         
         if( !$this->bundleResolver->bundleIsset('comment') || $metadata->getName() != self::COMMENT_ENTITY_PATH )
             return;
-        
-        $namingStrategy = $args
-                ->getEntityManager()
-                ->getConfiguration()
-                ->getNamingStrategy();
-        
+
         $metadata->mapOneToMany( array(
             'targetEntity' => $this->resolveClass,
             'fieldName'    => 'comments',

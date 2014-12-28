@@ -1,0 +1,11 @@
+parameters:
+    comment.api_type.class: Comment\ApiBundle\Form\CommentType
+    
+    
+services:
+    comment.api_type:
+        class: %comment.api_type.class%
+        arguments:
+            - %doctrine_resolve_class%
+        tags:
+            - {name: form.type, alias: comment_api_form }

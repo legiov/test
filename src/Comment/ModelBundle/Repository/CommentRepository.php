@@ -54,6 +54,19 @@ class CommentRepository extends EntityRepository
 
         return $qb->getQuery()->getSingleResult();
     }
+    
+    /**
+     * Return the first post
+     * @return Author
+     */
+    public function findLast()
+    {
+        $qb = $this->getQueryBuilder()
+            ->orderBy('c.id', 'desc')
+            ->setMaxResults( 1 );
+
+        return $qb->getQuery()->getSingleResult();
+    }
 
     /**
      *

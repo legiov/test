@@ -1,6 +1,7 @@
 parameters:
     comment.manager.class: Comment\CoreBundle\Services\Manager
     comment.twig_extension.class: Comment\CoreBundle\TwigExtension\CommentExtension
+    comment.send_comment_creation_message.class: Comment\CoreBundle\EventListener\SendCommentCreationMessageSubscriber
     
 services:
     comment.manager:
@@ -11,6 +12,7 @@ services:
             - @security.context
             - @security.acl.provider
             - @comment.model.comment_type
+            - @event_dispatcher
             - %doctrine_resolve_class%
             
     comment.twig_extension:
@@ -19,3 +21,10 @@ services:
             - @fragment.handler
         tags:
             - { name: twig.extension }
+            
+    comment.send_comment_creation_message:
+        class: %comment.send_comment_creation_message.class%
+        arguments:
+            - @mailer
+        tags:
+            - { name: kernel.event_subscriber }

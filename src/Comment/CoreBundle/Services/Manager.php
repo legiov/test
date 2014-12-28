@@ -2,9 +2,13 @@
 
 namespace Comment\CoreBundle\Services;
 
+use Comment\CoreBundle\Event\CommentEvent;
+use Comment\CoreBundle\Event\CommentEvents;
 use Comment\ModelBundle\Entity\Comment;
+use Comment\ModelBundle\Form\CommentType;
 use Doctrine\ORM\EntityManager;
 use FOS\UserBundle\Model\UserInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\Test\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,7 +18,6 @@ use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
 use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
 use Symfony\Component\Security\Acl\Permission\MaskBuilder;
 use Symfony\Component\Security\Core\SecurityContextInterface;
-use Comment\ModelBundle\Form\CommentType;
 
 /**
  * Class AuthorManager
@@ -28,25 +31,22 @@ class Manager
     private $aclProvider;
     private $commentType;
     private $class;
+    private $eventDispatcher;
 
     /**
      * Construct
      * @param EntityManager $em
      */
     public function __construct(
-            EntityManager $em,
-            FormFactory $formFactory,
-            SecurityContextInterface $sc,
-            MutableAclProviderInterface $aclProvider,
-            CommentType $cf,
-            $class 
-            )
+    EntityManager $em, FormFactory $formFactory, SecurityContextInterface $sc, MutableAclProviderInterface $aclProvider, CommentType $cf, EventDispatcherInterface $ed, $class
+    )
     {
         $this->em              = $em;
         $this->formFactory     = $formFactory;
         $this->aclProvider     = $aclProvider;
         $this->securityContext = $sc;
         $this->commentType     = $cf;
+        $this->eventDispatcher = $ed;
         $this->class           = $class;
     }
 
@@ -60,8 +60,9 @@ class Manager
     {
         $object = $this->em->getRepository( $this->class )->find( $id );
 
-        if( null === $object )
+        if( null === $object ){
             throw new NotFoundHttpException( 'comment object was not found' );
+        }
 
         return $object;
     }
@@ -97,24 +98,32 @@ class Manager
      * 
      * @return boolean|FormInterface
      */
-    public function createComment( $object, Request $request )
+    public function createComment( $object, Request $request, $commentForm = NULL )
     {
 
         $comment = new Comment();
         $comment->setCommentObject( $object );
 
-        $form = $this->formFactory->create( $this->commentType, $comment );
+        if( $commentForm === NULL )
+        {
+            $commentForm = $this->commentType;
+        }
+        
+        $form = $this->formFactory->create( $commentForm, $comment );
 
         $form->handleRequest( $request );
 
 
         if( $form->isValid() )
         {
-            $object->addComment( $comment );
+            if( $object )
+                $object->addComment( $comment );
 
 
             $this->em->persist( $comment );
             $this->em->flush();
+
+            $this->eventDispatcher->dispatch( CommentEvents::COMMENT_CREATE, new CommentEvent( $comment ) );
 
             $user = $this->securityContext->getToken()->getUser();
 
@@ -131,7 +140,7 @@ class Manager
                 $this->aclProvider->updateAcl( $acl );
             }
 
-            return true;
+            return $comment;
         }
 
         return $form;
