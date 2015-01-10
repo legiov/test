@@ -49,7 +49,7 @@ class CommentExtension extends Twig_Extension
     public function render( $method, $post )
     {
         $uri = new ControllerReference( 'CommentCoreBundle:Comment:' . $method, array(
-            'id' => $post->getId()
+            'post' => $post
                 )
         );
 

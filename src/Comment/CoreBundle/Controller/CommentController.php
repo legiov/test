@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Comment\CoreBundle\Annotation\ValidSubject;
 
 /**
  * Comment controller.
@@ -25,21 +26,22 @@ class CommentController extends Controller
      * @Route("/object/{id}")
      * @Method("GET")
      * @Template()
+     * @ValidSubject(post="post")
      * @return array
      */
-    public function commentsAction( $id, Request $request )
+    public function commentsAction( $post, Request $request )
     {
         $em = $this->getDoctrine()->getManager();
         
-        $object = $this->getManager()->findCommentObjectById( $id );
+        //$object = $this->getManager()->findCommentObjectById( $id );
         
-        $form = $this->getManager()->createComment( $object, $request, 'comment_form' );
+        $form = $this->getManager()->createComment( $post, $request, 'comment_form' );
 
-        $comments = $em->getRepository( 'CommentModelBundle:Comment' )->findBy( array( 'comment_object' => $object ) );
+        $comments = $em->getRepository( 'CommentModelBundle:Comment' )->findBy( array( 'comment_object' => $post ) );
 
         return array(
             'comments' => $comments,
-            'object'   => $object,
+            'object'   => $post,
             'form'     => $form->createView()
         );
     }
@@ -98,12 +100,13 @@ class CommentController extends Controller
      * @Method({"POST"})
      * @Route("/{id}/count_comments")
      * @Template()
+     * @ValidSubject(post="post")
      */
-    public function commentsCountAction( $id )
+    public function commentsCountAction( $post )
     {
-        $object = $this->getManager()->findCommentObjectById( $id );
+        
 
-        $count = $this->getDoctrine()->getRepository( 'CommentModelBundle:Comment')->countObjectComments( $object );
+        $count = $this->getDoctrine()->getRepository( 'CommentModelBundle:Comment')->countObjectComments( $post );
         
         return array(
             'count' => $count,

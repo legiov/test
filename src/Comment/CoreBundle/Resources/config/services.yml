@@ -2,6 +2,8 @@ parameters:
     comment.manager.class: Comment\CoreBundle\Services\Manager
     comment.twig_extension.class: Comment\CoreBundle\TwigExtension\CommentExtension
     comment.send_comment_creation_message.class: Comment\CoreBundle\EventListener\SendCommentCreationMessageSubscriber
+    comment.annotation_listener.class: Comment\CoreBundle\EventListener\AnnotationListener
+    comment.valid_subject_annotation.class: Comment\CoreBundle\Annotation\ValidSubject
     
 services:
     comment.manager:
@@ -27,3 +29,11 @@ services:
             - @mailer
         tags:
             - { name: kernel.event_subscriber }
+            
+    comment.annotation_listener:
+        class: %comment.annotation_listener.class%
+        arguments:
+            - @annotation_reader
+            - %comment.valid_subject_annotation.class%
+        tags:
+            - { name: kernel.event_listener, event: "kernel.controller", method: onKernelController }
