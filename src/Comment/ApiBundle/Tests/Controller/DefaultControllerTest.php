@@ -52,7 +52,7 @@ class DefaultControllerTest extends WebTestCase
         $params = array(
             'comment_api_form' => array(
                 'authorName'     => 'testAuthor',
-                'body'           => 'testBody',
+                'body'           => 'тестовое сообщение',
                 'comment_object' => $post->getId()
             )
         );

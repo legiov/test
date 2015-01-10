@@ -7,6 +7,7 @@ use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
 use JMS\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use Comment\CoreBundle\Validator\Constraints\ContainsRussian;
 
 
 /**
@@ -42,6 +43,7 @@ class Comment extends Timestampable
      * @Groups({"all_user"})
      * @ORM\Column(name="body", type="text")
      * @Assert\NotBlank()
+     * @ContainsRussian()
      */
     private $body;
 

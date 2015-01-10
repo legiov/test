@@ -24,27 +24,27 @@ class CommentControllerTest extends ExtendedCase
         
         // Fill in the form and submit it
         $form = $crawler->selectButton('Send')->form(array(
-            'comment_form[body]'  => 'Test body',
+            'comment_form[body]'  => 'Тест боди',
         ));
 
         $client->submit($form);
         $crawler = $client->followRedirect();
 
         // Check data in the show view
-        $this->assertGreaterThan(0, $crawler->filter('div:contains("Test body")')->count(), 'Missing element td:contains("Test")');
+        $this->assertGreaterThan(0, $crawler->filter('div:contains("Тест боди")')->count(), 'Missing element td:contains("Тест боди")');
 
         // Edit the entity
         $crawler = $client->click($crawler->selectLink('Edit')->link());
 
         $form = $crawler->selectButton('Send')->form(array(
-            'comment_form[body]'  => 'Foo',
+            'comment_form[body]'  => 'Тест бодива',
         ));
 
         $client->submit($form);
         $crawler = $client->followRedirect();
 
         // Check the element contains an attribute with value equals "Foo"
-        $this->assertGreaterThan(0, $crawler->filter('div:contains("Foo")')->count(), 'Missing element td:contains("Foo")');
+        $this->assertGreaterThan(0, $crawler->filter('div:contains("Тест бодива")')->count(), 'Missing element td:contains("Тест бодива")');
 
         $crawler = $client->click($crawler->selectLink('Edit')->link());
         
@@ -71,7 +71,7 @@ class CommentControllerTest extends ExtendedCase
 
         $form = $button->form( array(
             'comment_form[authorName]'  => 'some name',
-            'comment_form[body]'        => 'some text'
+            'comment_form[body]'        => 'какой то текст'
         ));
 
         $client->submit($form);
