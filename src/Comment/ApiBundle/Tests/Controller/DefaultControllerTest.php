@@ -38,7 +38,7 @@ class DefaultControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $comment = $client->getContainer()->get( 'doctrine' )->getRepository( 'Component\Comment\Model\Comment' )->findLast();
+        $comment = $client->getContainer()->get( 'doctrine' )->getRepository( 'CommentModelBundle:Comment' )->findLast();
 
         $crawler = $client->request( 'GET', '/api/v1/comments/' . $comment->getId() . '.json' );
 
@@ -65,7 +65,7 @@ class DefaultControllerTest extends WebTestCase
     public function testDeleteComment()
     {
         $client  = static::createClient();
-        $comment = $client->getContainer()->get( 'doctrine' )->getRepository( 'Component\Comment\Model\Comment' )->findLast();
+        $comment = $client->getContainer()->get( 'doctrine' )->getRepository( 'CommentModelBundle:Comment' )->findLast();
 
         $client->request( 'DELETE', '/api/v1/comments/' . $comment->getId() . '.json' );
 

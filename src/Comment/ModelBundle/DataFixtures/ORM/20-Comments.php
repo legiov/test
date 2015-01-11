@@ -2,7 +2,7 @@
 
 namespace Comment\ModelBundle\DataFixtures\ORM;
 
-use Component\Comment\Model\Comment;
+use Comment\ModelBundle\Entity\Comment;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;

@@ -5,7 +5,7 @@ imports:
 parameters:
     avaible_locale: [ru,en]
     doctrine_resolve_class: Blog\ModelBundle\Entity\Post
-    comment_resolve_class: Component\Comment\Model\Comment
+    comment_resolve_class: Comment\ModelBundle\Entity\Comment
     comment_api.version: v1
 
 framework:
@@ -72,11 +72,11 @@ doctrine:
         auto_generate_proxy_classes: %kernel.debug%
         auto_mapping: true
         mappings:
-            comment_model:
-                type: xml
-                prefix: Component\Comment\Model
-                dir: "%kernel.root_dir%/../src/Comment/ModelBundle/Resources/doctrine/model"
-                is_bundle: false
+#            comment_model:
+#                type: xml
+#                prefix: Component\Comment\Model
+#                dir: "%kernel.root_dir%/../src/Comment/ModelBundle/Resources/doctrine/model"
+#                is_bundle: false
             
 comment_core:
     entity:

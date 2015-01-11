@@ -10,22 +10,22 @@ class Comment extends Timestampable
     /**
      * @var integer
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      */
-    private $authorName;
+    protected $authorName;
 
     /**
      * @var string
      */
-    private $body;
+    protected $body;
 
     /**
      * @var Post
      */
-    private $comment_object;
+    protected $comment_object;
 
 
     /**

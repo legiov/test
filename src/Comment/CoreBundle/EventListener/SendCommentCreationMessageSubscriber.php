@@ -4,7 +4,7 @@ namespace Comment\CoreBundle\EventListener;
 
 use Comment\CoreBundle\Event\CommentEvent;
 use Comment\CoreBundle\Event\CommentEvents;
-use Component\Comment\Model\Comment;
+use Comment\ModelBundle\Entity\Comment;
 use Swift_Mailer;
 use Swift_Message;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;

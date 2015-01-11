@@ -2,7 +2,7 @@
 
 namespace Comment\CoreBundle\Controller;
 
-use Component\Comment\Model\Comment;
+use Comment\ModelBundle\Entity\Comment;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -37,7 +37,7 @@ class CommentController extends Controller
         
         $form = $this->getManager()->createComment( $post, $request, 'comment_form' );
 
-        $comments = $em->getRepository( 'Component\Comment\Model\Comment' )->findBy( array( 'comment_object' => $post ) );
+        $comments = $em->getRepository( 'CommentModelBundle:Comment' )->findBy( array( 'comment_object' => $post ) );
 
         return array(
             'comments' => $comments,
@@ -57,7 +57,7 @@ class CommentController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository( 'Component\Comment\Model\Comment' )->findAll();
+        $entities = $em->getRepository( 'CommentModelBundle:Comment' )->findAll();
 
         return array(
             'entities' => $entities,
@@ -76,7 +76,7 @@ class CommentController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository( 'Component\Comment\Model\Comment' )->find( $id );
+        $entity = $em->getRepository( 'CommentModelBundle:Comment' )->find( $id );
 
         if( !$entity )
         {
@@ -106,7 +106,7 @@ class CommentController extends Controller
     {
         
 
-        $count = $this->getDoctrine()->getRepository( 'Component\Comment\Model\Comment')->countObjectComments( $post );
+        $count = $this->getDoctrine()->getRepository( 'CommentModelBundle:Comment')->countObjectComments( $post );
         
         return array(
             'count' => $count,
@@ -154,7 +154,7 @@ class CommentController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository( 'Component\Comment\Model\Comment' )->find( $id );
+        $entity = $em->getRepository( 'CommentModelBundle:Comment' )->find( $id );
 
         if( !$entity )
         {
@@ -201,7 +201,7 @@ class CommentController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository( 'Component\Comment\Model\Comment' )->find( $id );
+        $entity = $em->getRepository( 'CommentModelBundle:Comment' )->find( $id );
 
         if( !$entity )
         {
@@ -253,7 +253,7 @@ class CommentController extends Controller
         if( $form->isValid() )
         {
             $em     = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository( 'Component\Comment\Model\Comment' )->find( $id );
+            $entity = $em->getRepository( 'CommentModelBundle:Comment' )->find( $id );
 
             if( !$entity )
             {

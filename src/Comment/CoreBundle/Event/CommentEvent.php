@@ -3,7 +3,7 @@
 namespace Comment\CoreBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
-use Component\Comment\Model\Comment;
+use Comment\ModelBundle\Entity\Comment;
 
 /**
  * Description of CommentEvent

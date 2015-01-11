@@ -29,7 +29,7 @@ class CommentType extends AbstractType
         $builder
                 ->add( 'authorName', null, array(
                     'label' => 'blog.core.comment.author' ) )
-                ->add( 'body', null, array(
+                ->add( 'body', 'textarea', array(
                     'label' => 'blog.core.comment.comment' ) )
                 ->add( 'send', 'submit', array(
                     'label' => 'blog.core.comment.send' ) )

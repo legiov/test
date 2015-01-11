@@ -6,7 +6,6 @@ namespace Component\Comment\Model;
 /**
  * Description of Timestampable
  * define created behavior
- * @ORM\MappedSuperclass()
  */
 abstract class Timestampable
 {

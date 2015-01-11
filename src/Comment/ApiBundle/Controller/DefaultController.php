@@ -2,7 +2,7 @@
 
 namespace Comment\ApiBundle\Controller;
 
-use Component\Comment\Model\Comment;
+use Comment\ModelBundle\Entity\Comment;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\View\View as FOSview;
 use JMS\Serializer\SerializationContext;
@@ -40,7 +40,7 @@ class DefaultController extends FOSRestController
      */
     public function getCommentsAction()
     {
-        $data = $this->getDoctrine()->getRepository( 'Component\Comment\Model\Comment' )->findAll();
+        $data = $this->getDoctrine()->getRepository( 'CommentModelBundle:Comment' )->findAll();
 
 
         $view = $this->setGroup( $data );
@@ -59,7 +59,7 @@ class DefaultController extends FOSRestController
      */
     public function getPostCommentsAction( $post )
     {
-        $data = $this->getDoctrine()->getRepository( 'Component\Comment\Model\Comment' )->findBy( array(
+        $data = $this->getDoctrine()->getRepository( 'CommentModelBundle:Comment' )->findBy( array(
             'comment_object' => $post
                 ) );
 
@@ -80,7 +80,7 @@ class DefaultController extends FOSRestController
      */
     public function getPostCommentsCountAction( $post )
     {
-        $data = $this->getDoctrine()->getRepository( 'Component\Comment\Model\Comment' )->countObjectComments( $post );
+        $data = $this->getDoctrine()->getRepository( 'CommentModelBundle:Comment' )->countObjectComments( $post );
 
         $data = array(
             'count' => $data );
@@ -146,7 +146,7 @@ class DefaultController extends FOSRestController
     {
         $view    = $this->view( array(
             'message' => 'Comment was deleted' ), 200 );
-        $comment = $this->getDoctrine()->getRepository( 'Component\Comment\Model\Comment' )->find( $id );
+        $comment = $this->getDoctrine()->getRepository( 'CommentModelBundle:Comment' )->find( $id );
 
         if( $comment )
         {
