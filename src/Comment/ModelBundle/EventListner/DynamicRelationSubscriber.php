@@ -21,7 +21,7 @@ use Doctrine\ORM\Mapping\ClassMetadata;
 class DynamicRelationSubscriber implements EventSubscriber
 {
     
-    const COMMENT_ENTITY_PATH = "Comment\ModelBundle\Entity\Comment";
+    const COMMENT_ENTITY_PATH = "Component\Comment\Model\Comment";
     
     private $resolveClass;
     

@@ -4,7 +4,7 @@ namespace Comment\CoreBundle\Services;
 
 use Comment\CoreBundle\Event\CommentEvent;
 use Comment\CoreBundle\Event\CommentEvents;
-use Comment\ModelBundle\Entity\Comment;
+use Component\Comment\Model\Comment;
 use Comment\ModelBundle\Form\CommentType;
 use Doctrine\ORM\EntityManager;
 use FOS\UserBundle\Model\UserInterface;
@@ -71,7 +71,7 @@ class Manager
      */
     public function findAll()
     {
-        $posts = $this->em->getRepository( 'CommentModelBundle:Comment' )->findAll();
+        $posts = $this->em->getRepository( 'Component\Comment\Model\Comment' )->findAll();
 
         return $posts;
     }
@@ -84,7 +84,7 @@ class Manager
      */
     public function findLatest( $num )
     {
-        $comments = $this->em->getRepository( 'CommentModelBundle:Comment' )->findLatest( $num );
+        $comments = $this->em->getRepository( 'Component\Comment\Model\Comment' )->findLatest( $num );
 
         return $comments;
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Comment\ModelBundle\Model;
+namespace Component\Comment\Model;
 
 use Symfony\Component\Intl\Exception\NotImplementedException;
 

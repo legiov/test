@@ -1,54 +1,28 @@
 <?php
 
-namespace Comment\ModelBundle\Entity;
-
-use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation\ExclusionPolicy;
-use JMS\Serializer\Annotation\Expose;
-use JMS\Serializer\Annotation\Groups;
-use Symfony\Component\Validator\Constraints as Assert;
-use Comment\CoreBundle\Validator\Constraints\ContainsRussian;
-
+namespace Component\Comment\Model;
 
 /**
  * Comment
- * @ExclusionPolicy("all")
- * @ORM\Table()
- * @ORM\Entity(repositoryClass="Comment\ModelBundle\Repository\CommentRepository")
  */
 class Comment extends Timestampable
 {
     /**
      * @var integer
-     * @Expose
-     * @Groups({"all_user"})
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var string
-     * @Expose
-     * @Groups({"all_user"})
-     * @ORM\Column(name="authorName", type="string", length=255)
-     * @Assert\NotBlank()
      */
     private $authorName;
 
     /**
      * @var string
-     * @Expose
-     * @Groups({"all_user"})
-     * @ORM\Column(name="body", type="text")
-     * @Assert\NotBlank()
-     * @ContainsRussian()
      */
     private $body;
 
     /**
-     * @Assert\NotBlank()
      * @var Post
      */
     private $comment_object;

@@ -25,7 +25,7 @@ class CommentCoreExtension extends Extension implements PrependExtensionInterfac
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
-    }
+    }  
     /**
      * Allow to prepend any extension configuration
      * @param ContainerBuilder $container
@@ -46,7 +46,7 @@ class CommentCoreExtension extends Extension implements PrependExtensionInterfac
             $forInsert = array(
                 'orm' => array(
                     'resolve_target_entities' => array(
-                        'Comment\ModelBundle\Model\CommentObjectInterface' => $config['entity']['class']
+                        'Component\Comment\Model\CommentObjectInterface' => $config['entity']['class']
                     )
                 )
             );

@@ -1,9 +1,7 @@
 <?php
 
-namespace Comment\ModelBundle\Entity;
+namespace Component\Comment\Model;
 
-use Doctrine\ORM\Mapping AS ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Description of Timestampable
@@ -16,19 +14,13 @@ abstract class Timestampable
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="created_at", type="datetime")
-     * @Gedmo\Timestampable(on="create")
      */
-    private $createdAt;
+    protected $createdAt;
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="updated_at", type="datetime")
-     * @Gedmo\Timestampable(on="update")
      */
-    private $updatedAt;
+    protected $updatedAt;
 
     /**
      * Set createdAt

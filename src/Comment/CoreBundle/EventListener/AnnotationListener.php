@@ -2,7 +2,7 @@
 
 namespace Comment\CoreBundle\EventListener;
 
-use Comment\ModelBundle\Model\CommentObjectValidator;
+use Component\Comment\Model\CommentObjectValidator;
 use Doctrine\Common\Annotations\FileCacheReader;
 use Doctrine\Common\Util\ClassUtils;
 use ReflectionClass;

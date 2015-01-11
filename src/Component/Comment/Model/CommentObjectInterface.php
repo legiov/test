@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Comment\ModelBundle\Model;
+namespace Component\Comment\Model;
 
 /**
  *
