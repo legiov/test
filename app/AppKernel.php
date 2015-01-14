@@ -32,6 +32,7 @@ class AppKernel extends Kernel
             new Comment\CoreBundle\CommentCoreBundle(),
             new Comment\ModelBundle\CommentModelBundle(),
             new Comment\ApiBundle\CommentApiBundle(),
+            new Legio\CheckBundle\LegioCheckBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

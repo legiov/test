@@ -112,3 +112,10 @@ fos_user:
     user_class: Blog\ModelBundle\Entity\Author
     
 nelmio_api_doc: ~
+
+legio_check:
+    check_types:
+        check_test:
+            checking_service: test_service
+            data_field: test_field
+            type: money

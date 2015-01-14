@@ -2,8 +2,7 @@
 
 namespace Component\Comment\Model;
 
-use Symfony\Component\Intl\Exception\NotImplementedException;
-
+use InvalidArgumentException;
 
 class CommentObjectValidator
 {
@@ -11,7 +10,9 @@ class CommentObjectValidator
     {
         if( !is_object( $obj ) || !method_exists( $obj, 'getId' ) )
         {
-            throw new NotImplementedException('Non correct object giving');
+            throw new InvalidArgumentException('Non correct object giving');
         }
+        
+        return $obj;
     }
 }
