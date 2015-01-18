@@ -1,0 +1,23 @@
+parameters:
+    legio_check.controller_annotation.listener.class: Legio\CheckBundle\Listener\ControllerAnnotationListener
+    legio_check.controller_annotation.resolver.class: Legio\CheckBundle\Resolver\ControllerAnnotationResolver
+    legio_check.annotation.check.class:               Legio\CheckBundle\Annotation\Check
+    legio_check.checker.money.class:                  Legio\CheckBundle\Checker\MoneyChecker
+    legio_check.checker.time.class:                   Legio\CheckBundle\Checker\TimeChecker
+    legio_check.checker.rate.class:                   Legio\CheckBundle\Checker\RateChecker
+    
+    legio_check.check_types: [ money, time, rate, custom ]
+    
+services:
+    legio_check.controller_annotation.resolver:
+        class: %legio_check.controller_annotation.resolver.class%
+        arguments:
+            - @service_container
+            
+    legio_check.controller_annotation.listener:
+        class: %legio_check.controller_annotation.listener.class%
+        arguments:
+            - @annotation_reader
+            - %legio_check.annotation.check.class%
+            - @legio_check.controller_annotation.resolver
+    

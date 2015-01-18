@@ -20,21 +20,32 @@ class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder();
         $rootNode    = $treeBuilder->root( 'legio_check' );
-
+        
         $rootNode
-            ->children()
-                ->arrayNode( 'check_types' )
-                    ->prototype( 'array' )
-                        ->children()
-                            ->scalarNode( 'checking_service' )->end()
-                            ->scalarNode( 'data_field' )->end()
-                            ->enumNode( 'type')
-                                ->values( array('money','time_interval','rate', 'custom') )
+                ->children()
+                    ->arrayNode( 'check_types' )
+                        ->prototype( 'array' )
+                            ->children()
+                                ->scalarNode( 'checker' )->end()
+                                ->scalarNode( 'set_method' )
+                                ->end()
+                                ->scalarNode( 'get_method' )
+                                    ->isRequired()->cannotBeEmpty()
+                                ->end()
+                                ->scalarNode( 'controller' )->end()
+                                ->enumNode( 'type' )
+                                    ->isRequired()
+                                    ->cannotBeEmpty()
+                                    ->values( array(
+                                        'money',
+                                        'time',
+                                        'rate',
+                                        'custom' ) )
+                                    ->end()
                             ->end()
                         ->end()
                     ->end()
                 ->end()
-            ->end()
         ;
 
 

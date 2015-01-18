@@ -116,6 +116,10 @@ nelmio_api_doc: ~
 legio_check:
     check_types:
         check_test:
-            checking_service: test_service
-            data_field: test_field
+            get_method: getMoney
+            set_method: payMoney
             type: money
+        check_test2:
+            get_method: getRate   
+            type: rate
+            
