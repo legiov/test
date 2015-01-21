@@ -8,9 +8,10 @@
 
 namespace Legio\CheckBundle\Checker;
 
+use Symfony\Bundle\FrameworkBundle\Controller\ControllerResolver;
+use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\SecurityContext;
-use Symfony\Bundle\FrameworkBundle\Controller\ControllerResolver;
 
 /**
  * Description of MoneyChecker
@@ -34,12 +35,15 @@ class MoneyChecker implements CheckerInterface
 
     public function check( $value )
     {
-        if( $this->sc->getToken() )
+        
+        if( $this->sc->getToken() && !( $this->sc->getToken() instanceof AnonymousToken ) )
         {
-            $user   = $$this->sc->getToken()->getUser();
-            $method = $this->method;
-            $money  = $user->$method();
+            
+            $user   = $this->sc->getToken()->getUser();
+            $method = $this->methodGet;
 
+            $money  = call_user_func(array( $user, $method) );
+            
             if( $money < $value )
             {
                 if( $this->controller )

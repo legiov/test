@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Legio\CheckBundle\Annotation\Check;
 
 /**
  * class PostController
@@ -37,9 +38,9 @@ class PostController extends Controller
      *
      * @param string $slug
      * @return array
-     *
      * @Route("/{slug}")
      * @Template()
+     * @Check(type="check_test", value="200")
      * @throws NotFoundHttpException
      */
     public function showAction( $slug )

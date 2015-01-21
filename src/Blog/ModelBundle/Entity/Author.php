@@ -211,5 +211,10 @@ class Author extends BaseUser
 
         return $this;
     }
+    
+    public function getMoney()
+    {
+        return 100;
+    }
 
 }

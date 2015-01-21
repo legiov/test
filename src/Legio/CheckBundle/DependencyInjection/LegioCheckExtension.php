@@ -84,7 +84,7 @@ class LegioCheckExtension extends Extension
 
     private function parseController( $controller, ContainerBuilder $container )
     {
-
+        // return;
         $parser = new ControllerNameParser( $container->get( 'kernel' ) );
 
         return $parser->parse( $controller );

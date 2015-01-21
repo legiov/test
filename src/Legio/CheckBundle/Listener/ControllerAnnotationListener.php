@@ -3,7 +3,7 @@
 namespace Legio\CheckBundle\Listener;
 
 use Doctrine\Common\Annotations\FileCacheReader;
-use Legio\CheckBundle\Manager\ControllerAnnotationResolver;
+use Legio\CheckBundle\Resolver\ControllerAnnotationResolver;
 use ReflectionMethod;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 

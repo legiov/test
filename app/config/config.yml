@@ -118,6 +118,7 @@ legio_check:
         check_test:
             get_method: getMoney
             set_method: payMoney
+            controller: BlogCoreBundle:Author:showAction
             type: money
         check_test2:
             get_method: getRate   

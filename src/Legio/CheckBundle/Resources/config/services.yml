@@ -20,4 +20,6 @@ services:
             - @annotation_reader
             - %legio_check.annotation.check.class%
             - @legio_check.controller_annotation.resolver
+        tags:
+            - {name: "kernel.event_listener", event: kernel.controller, method: onKernelController }
     

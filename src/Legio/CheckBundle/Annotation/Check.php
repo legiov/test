@@ -1,5 +1,7 @@
 <?php
 
+namespace Legio\CheckBundle\Annotation;
+
 use Legio\CheckBundle\Annotation\AnnotationInterface;
 
 /*
@@ -21,5 +23,15 @@ class Check implements AnnotationInterface
     {
         $this->value = $arguments['value'];
         $this->type  = $arguments['type'];
+    }
+    
+    public function getName()
+    {
+        return $this->type;
+    }
+    
+    public function getValue()
+    {
+        return $this->value;
     }
 }
