@@ -15,8 +15,23 @@ use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 class ControllerAnnotationListener
 {
 
+    /**
+     *
+     * @var FileCacheReader
+     */
     private $annotationReader;
+    
+    /**
+     * 
+     *
+     * @var string
+     */
     private $annotationClass;
+    
+    /**
+     *
+     * @var ControllerAnnotationResolver
+     */
     private $resolver;
 
     public function __construct( FileCacheReader $annotationReader, $annotationClass, ControllerAnnotationResolver $resolver )
@@ -26,6 +41,12 @@ class ControllerAnnotationListener
         $this->resolver         = $resolver;
     }
 
+    /**
+     * Listen kernel.controller event for find assigned annotation
+     * 
+     * @param FilterControllerEvent $event
+     * @return null
+     */
     public function onKernelController( FilterControllerEvent $event )
     {
         $controller = $event->getController();

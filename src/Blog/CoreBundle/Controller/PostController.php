@@ -40,7 +40,7 @@ class PostController extends Controller
      * @return array
      * @Route("/{slug}")
      * @Template()
-     * @Check(type="check_test", value="200")
+     * //@Check(type="check_test2", value="200")
      * @throws NotFoundHttpException
      */
     public function showAction( $slug )

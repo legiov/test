@@ -43,6 +43,13 @@ class LegioCheckExtension extends Extension
         }
     }
 
+    /**
+     * Create services from configuration
+     * 
+     * @param string $name
+     * @param array $config
+     * @param ContainerBuilder $container
+     */
     private function setCheckerService( $name, $config, ContainerBuilder $container )
     {
         $this->validateData( $config, $name, $container );
@@ -57,20 +64,33 @@ class LegioCheckExtension extends Extension
             {
                 $definition->addArgument( $config[ 'set_method' ] );
             }
+            else
+            {
+                $definition->addArgument( null );
+            }
             $definition->addArgument( new Reference( 'security.context' ) );
             if( isset( $config[ 'controller' ] ) )
             {
-                $definition->addArgument( $this->parseController( $config[ 'controller' ], $container ) );
+                $definition->addArgument( $config[ 'controller' ] );
             }
 
             $container->setDefinition( 'legio_check.checker.' . $name, $definition );
         }
         else
         {
-            //@todo custom service
+            
+            $container->setAlias( 'legio_check.checker.' . $name, $config['checker'] );
         }
     }
 
+    /**
+     * validate configuration data
+     * 
+     * @param array $config
+     * @param string $name
+     * @param ContainerBuilder $container
+     * @throws InvalidArgumentException
+     */
     private function validateData( $config, $name, ContainerBuilder $container )
     {
         if( $config[ 'type' ] == 'custom' )
@@ -82,12 +102,6 @@ class LegioCheckExtension extends Extension
         }
     }
 
-    private function parseController( $controller, ContainerBuilder $container )
-    {
-        // return;
-        $parser = new ControllerNameParser( $container->get( 'kernel' ) );
-
-        return $parser->parse( $controller );
-    }
+    
 
 }

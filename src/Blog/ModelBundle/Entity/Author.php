@@ -216,5 +216,10 @@ class Author extends BaseUser
     {
         return 100;
     }
+    
+    public function getRate()
+    {
+        return 250;
+    }
 
 }

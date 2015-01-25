@@ -9,5 +9,10 @@ namespace Legio\CheckBundle\Checker;
 interface CheckerInterface
 {
 
+    /**
+     * Check value with configured checker
+     * 
+     * @param string $value
+     */
     public function check( $value );
 }

@@ -8,31 +8,25 @@
 
 namespace Legio\CheckBundle\Checker;
 
-use Symfony\Bundle\FrameworkBundle\Controller\ControllerResolver;
 use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\Security\Core\SecurityContext;
 
 /**
  * Description of MoneyChecker
  *
  * @author Вадим
  */
-class MoneyChecker implements CheckerInterface
+class MoneyChecker extends AbstractChecker implements CheckerInterface
 {
 
-    private $method;
-    private $sc;
-    private $controller;
-
-    public function __construct( $method, $methodSet, SecurityContext $sc, $controller = NULL )
-    {
-        $this->sc         = $sc;
-        $this->methodGet  = $method;
-        $this->methodSet  = $methodSet;
-        $this->controller = $controller;
-    }
-
+    /**
+     * Check user enough money for access page and write off money if enough
+     * throw access denied exception if user hasn't enough money
+     * 
+     * @param string $value
+     * @return string configured controller's action
+     * @throws AccessDeniedException
+     */
     public function check( $value )
     {
         
@@ -48,7 +42,7 @@ class MoneyChecker implements CheckerInterface
             {
                 if( $this->controller )
                 {
-                    return $this->getController();
+                    return $this->controller;
                 }
                 else
                 {
@@ -66,14 +60,15 @@ class MoneyChecker implements CheckerInterface
         }
     }
 
+    /**
+     * write off money with configured method
+     * 
+     * @param string $value
+     */
     public function pay( $value )
     {
-        
+        $this->methodSet( $value );
     }
 
-    public function getController()
-    {
-        $res = new ControllerResolver($container, $parser);
-    }
 
 }

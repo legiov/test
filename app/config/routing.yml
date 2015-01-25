@@ -1,8 +1,3 @@
-legio_check:
-    resource: "@LegioCheckBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
 NelmioApiDocBundle:
     resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
     prefix:   /api/doc/%comment_api.version%
